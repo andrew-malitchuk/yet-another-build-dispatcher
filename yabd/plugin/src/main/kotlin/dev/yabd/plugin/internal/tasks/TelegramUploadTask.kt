@@ -3,7 +3,7 @@ package dev.yabd.plugin.internal.tasks
 import dev.yabd.plugin.common.core.file.ArtifactPathFinder.defaultArtifactResolveStrategy
 import dev.yabd.plugin.internal.config.TelegramConfig
 import dev.yabd.plugin.internal.core.utils.TelegramUtils.getDownloadLink
-import dev.yabd.plugin.internal.uploader.telegram.TelegramUploader
+import dev.yabd.plugin.internal.usecase.telegram.TelegramFileUploadUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
@@ -33,7 +33,7 @@ abstract class TelegramUploadTask : DefaultTask() {
                     lifecycle("telegram-config  |   artifactName    : $artifactName")
                 }
                 val response =
-                    TelegramUploader(
+                    TelegramFileUploadUseCase(
                         chatId = chatId,
                         token = token,
                         artifactPath = artifactPath,
