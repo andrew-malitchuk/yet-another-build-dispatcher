@@ -8,6 +8,5 @@ open class JiraCommentConfig {
     var filePath: String? = null
     var jiraCloudInstance: String? = null
     var ticket: String? = null
-    var tag: String? = null
-    var artifactName: String? = null
+    var comment: String? = null
 }

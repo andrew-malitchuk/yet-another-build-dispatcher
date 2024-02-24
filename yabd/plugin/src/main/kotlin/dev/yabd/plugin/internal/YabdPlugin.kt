@@ -52,7 +52,6 @@ class YabdPlugin : Plugin<Project> {
                         JiraAttachCommentTask::class.java,
                     ) {
                         yabd.jiraCommentConfig.apply {
-                            tag = variant.name
                             it.group = "jiraUpload"
                             it.description = "Task for ${variant.name} variant"
                             it.jiraCommentConfig.set(this)

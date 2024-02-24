@@ -40,7 +40,22 @@ object JiraUtils {
         )
     }
 
-    fun getDownloadLinkComment(jiraFileUpload: JiraFileUploadResponseNetModel): String {
-        return "[${jiraFileUpload.firstOrNull()?.filename}](${jiraFileUpload.firstOrNull()?.content})"
+    fun getDownloadLinkComment(
+        pattern: String,
+        replaceTag: String = Various.COMMENT_TAG,
+        jiraFileUpload: JiraFileUploadResponseNetModel,
+    ): String {
+        require(pattern.contains("{$replaceTag}")) {
+            "Please, check if `pattern` contains `replaceTag`"
+        }
+        require(!jiraFileUpload.firstOrNull()?.content.isNullOrBlank()) {
+            "Invalid input data"
+        }
+
+        return pattern.replace("{$replaceTag}", jiraFileUpload.firstOrNull()?.content!!)
+    }
+
+    object Various {
+        const val COMMENT_TAG = "{URL_TO_REPLACE}"
     }
 }

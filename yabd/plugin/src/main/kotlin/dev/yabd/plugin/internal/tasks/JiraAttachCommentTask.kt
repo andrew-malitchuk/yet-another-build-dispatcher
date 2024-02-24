@@ -1,12 +1,8 @@
 package dev.yabd.plugin.internal.tasks
 
-import dev.yabd.plugin.common.core.file.ArtifactPathFinder.defaultArtifactResolveStrategy
 import dev.yabd.plugin.internal.config.JiraCommentConfig
-import dev.yabd.plugin.internal.core.utils.JiraUtils.getDownloadLinkComment
-import dev.yabd.plugin.internal.usecase.jira.JiraCommentUseCase
-import dev.yabd.plugin.internal.usecase.jira.JiraFileUploadUseCase
+import dev.yabd.plugin.internal.usecase.jira.JiraLeaveCommentUseCase
 import org.gradle.api.DefaultTask
-import org.gradle.api.GradleException
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
@@ -24,36 +20,19 @@ abstract class JiraAttachCommentTask : DefaultTask() {
     @Suppress("ForbiddenComment")
     fun action() {
         with(jiraCommentConfig.get()) {
-            val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
-
             logger.apply {
-                lifecycle("jira-comment  |   buildVariant                : $tag")
-                lifecycle("jira-comment  |   email                       : $email")
-                lifecycle("jira-comment  |   jiraCloudInstance           : $jiraCloudInstance")
-                lifecycle("jira-comment  |   token                       : $token")
-                lifecycle("jira-comment  |   ticket                      : $ticket")
-                lifecycle("jira-comment  |   filePath                    : ${artifactPath.path}")
-                artifactName?.let {
-                    lifecycle("jira-comment  |   artifactName                : $artifactName")
-                }
-                val jiraFileUploadResponse =
-                    JiraFileUploadUseCase(
-                        email = email,
-                        token = token,
-                        jiraCloudInstance = jiraCloudInstance,
-                        ticket = ticket,
-                        artifactPath = artifactPath,
-                        artifactName = artifactName,
-                    ).invoke() ?: throw GradleException("SWW during file uploading")
-
-                lifecycle("jira-comment  |   link                        : $jiraFileUploadResponse}")
+                lifecycle("jira-comment  |   email                          : $email")
+                lifecycle("jira-comment  |   jiraCloudInstance              : $jiraCloudInstance")
+                lifecycle("jira-comment  |   token                          : $token")
+                lifecycle("jira-comment  |   ticket                         : $ticket")
+                lifecycle("jira-comment  |   comment                        : $comment")
                 val jiraCommentResponse =
-                    JiraCommentUseCase(
+                    JiraLeaveCommentUseCase(
                         email = email,
                         token = token,
                         jiraCloudInstance = jiraCloudInstance,
                         ticket = ticket,
-                        comment = getDownloadLinkComment(jiraFileUploadResponse),
+                        comment = comment,
                     ).invoke()
                 jiraCommentResponse?.let {
                     lifecycle("jira-comment  |   link                        : $it}")

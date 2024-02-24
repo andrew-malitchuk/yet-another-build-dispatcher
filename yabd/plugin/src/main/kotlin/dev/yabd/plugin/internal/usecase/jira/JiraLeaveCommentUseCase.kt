@@ -13,7 +13,8 @@ import java.util.Base64
 /**
  * https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-comments/#api-rest-api-3-issue-issueidorkey-comment-post
  */
-class JiraCommentUseCase(
+@Suppress("ForbiddenComment")
+class JiraLeaveCommentUseCase(
     private val email: String?,
     private val token: String?,
     private val jiraCloudInstance: String?,
@@ -43,6 +44,7 @@ class JiraCommentUseCase(
         require(body != null) {
             "failed to generate `body`"
         }
+        // TODO: recode to factory method or abstract factory
         val request =
             org.http4k.core.Request(
                 method = Method.POST,
@@ -82,7 +84,6 @@ class JiraCommentUseCase(
         object Variables {
             const val JIRA_CLOUD_INSTANCE = "jiraCloudInstance"
             const val TICKET = "ticket"
-            const val FILE = "file"
         }
 
         const val BASE_URL = "https://{${Variables.JIRA_CLOUD_INSTANCE}}"
