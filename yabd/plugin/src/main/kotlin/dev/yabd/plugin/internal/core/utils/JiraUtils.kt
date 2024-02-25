@@ -45,14 +45,14 @@ object JiraUtils {
         replaceTag: String = Various.COMMENT_TAG,
         jiraFileUpload: JiraFileUploadResponseNetModel,
     ): String {
-        require(pattern.contains("{$replaceTag}")) {
+        require(pattern.contains(replaceTag)) {
             "Please, check if `pattern` contains `replaceTag`"
         }
         require(!jiraFileUpload.firstOrNull()?.content.isNullOrBlank()) {
             "Invalid input data"
         }
 
-        return pattern.replace("{$replaceTag}", jiraFileUpload.firstOrNull()?.content!!)
+        return pattern.replace(replaceTag, jiraFileUpload.firstOrNull()?.content!!)
     }
 
     object Various {
