@@ -17,6 +17,29 @@ object JiraUtils {
         }
     }
 
+    fun getDownloadLinkComment(comment: String): JiraCommentRequestNetModel {
+        return JiraCommentRequestNetModel(
+            body =
+                BodyNetModel(
+                    content =
+                        listOf(
+                            ContentNetModel(
+                                content =
+                                    listOf(
+                                        ContentCommentNetModel(
+                                            text = comment,
+                                            type = "text",
+                                        ),
+                                    ),
+                                type = "paragraph",
+                            ),
+                        ),
+                    type = "doc",
+                    version = 1,
+                ),
+        )
+    }
+
     fun getDownloadLinkComment(
         pattern: String,
         replaceTag: String = Various.COMMENT_TAG,
@@ -30,30 +53,6 @@ object JiraUtils {
         }
 
         return pattern.replace(replaceTag, jiraFileUpload.firstOrNull()?.content!!)
-    }
-
-    fun getDownloadLinkComment(comment: String): JiraCommentRequestNetModel {
-        return JiraCommentRequestNetModel(
-            body =
-                BodyNetModel(
-                    content =
-                        listOf(
-                            ContentNetModel(
-                                content =
-                                    listOf(
-                                        ContentCommentNetModel(
-                                            text = comment,
-                                            type = "text",
-                                            attrs = null,
-                                        ),
-                                    ),
-                                type = "paragraph",
-                            ),
-                        ),
-                    type = "document",
-                    version = 1,
-                ),
-        )
     }
 
     object Various {

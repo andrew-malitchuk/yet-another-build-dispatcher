@@ -2,17 +2,17 @@ package dev.yabd.plugin.internal.usecase.jira
 
 import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
+import dev.yabd.plugin.internal.data.JiraApiService.uploadFile
 import dev.yabd.plugin.internal.usecase.base.UseCase
+import dev.yabd.plugin.internal.usecase.jira.model.request.JiraAuthorizationNetModel
 import dev.yabd.plugin.internal.usecase.jira.model.response.JiraFileUploadResponseNetModel
 import dev.yabd.plugin.internal.usecase.jira.model.response.JiraFileUploadResponseNetModel.Companion.toJiraFileUploadResponseNetModel
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 import org.http4k.core.ContentType
-import org.http4k.core.Method
 import org.http4k.core.MultipartFormBody
 import org.http4k.lens.MultipartFormFile
 import java.io.File
-import java.util.Base64.getEncoder
 
 /**
  * https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-attachments/#api-group-issue-attachments
@@ -40,8 +40,6 @@ class JiraFileUploadUseCase(
             "`ticket` is invalid; please, check it"
         }
 
-        val client = ApacheClient()
-
         var file = File(artifactPath.path)
 
         // TODO: recode
@@ -65,20 +63,13 @@ class JiraFileUploadUseCase(
                         ),
                 )
 
-        val request =
-            org.http4k.core.Request(
-                method = Method.POST,
-                uri = getPath(jiraCloudInstance, ticket),
+        val response =
+            ApacheClient().uploadFile(
+                jiraCloudInstance,
+                ticket,
+                JiraAuthorizationNetModel(email, token),
+                body,
             )
-                .header("X-Atlassian-Token", "nocheck")
-                .header(
-                    "Authorization",
-                    "Basic " + getEncoder().encodeToString("$email:$token".toByteArray()),
-                )
-                .header("content-type", "multipart/form-data; boundary=${body.boundary}")
-                .body(body)
-
-        val response = client(request)
         return if (response.status.successful) {
             response.toJiraFileUploadResponseNetModel()
         } else {
@@ -87,18 +78,6 @@ class JiraFileUploadUseCase(
                     "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
-    }
-
-    private fun getPath(
-        jiraCloudInstance: String,
-        ticket: String,
-    ): String {
-        return "${
-            BASE_URL.replace(
-                "{${Variables.JIRA_CLOUD_INSTANCE}}",
-                jiraCloudInstance,
-            )
-        }${PATH.replace("{${Variables.TICKET}}", ticket)}"
     }
 
     companion object {
