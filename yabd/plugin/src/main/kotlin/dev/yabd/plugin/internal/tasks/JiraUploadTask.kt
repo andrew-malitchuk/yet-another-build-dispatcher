@@ -43,7 +43,7 @@ abstract class JiraUploadTask : DefaultTask() {
                         artifactName = artifactName,
                     ).invoke()
                 response?.let {
-                    lifecycle("jira-config  |   link                        : $it}")
+                    lifecycle("jira-config  |   link                        : ${it.firstOrNull()?.content}")
                 }
             }
         }

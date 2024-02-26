@@ -24,17 +24,16 @@ abstract class JiraAttachBuildTask : DefaultTask() {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
 
             logger.apply {
-                lifecycle("jira-attach-build  |   email                          : $email")
-                lifecycle("jira-attach-build  |   jiraCloudInstance              : $jiraCloudInstance")
-                lifecycle("jira-attach-build  |   token                          : $token")
-                lifecycle("jira-attach-build  |   ticket                         : $ticket")
-                lifecycle("jira-attach-build  |   comment                        : $comment")
-                lifecycle("jira-attach-build  |   filePath                          : ${artifactPath.path}")
+                lifecycle("jira-attach-build  |   email                         : $email")
+                lifecycle("jira-attach-build  |   jiraCloudInstance             : $jiraCloudInstance")
+                lifecycle("jira-attach-build  |   token                         : $token")
+                lifecycle("jira-attach-build  |   ticket                        : $ticket")
+                lifecycle("jira-attach-build  |   comment                       : $comment")
+                lifecycle("jira-attach-build  |   filePath                      : ${artifactPath.path}")
                 artifactName?.let {
-                    lifecycle("jira-config  |   artifactName                : $artifactName")
+                    lifecycle("jira-attach-build  |   artifactName                  : $artifactName")
                 }
-                val jiraAttachBuildLinkInCommentResponse =
-                    JiraAttachBuildLinkInCommentScenario(
+                val jiraAttachBuildLinkInCommentResponse = JiraAttachBuildLinkInCommentScenario(
                         email = email,
                         token = token,
                         jiraCloudInstance = jiraCloudInstance,
@@ -44,7 +43,7 @@ abstract class JiraAttachBuildTask : DefaultTask() {
                         artifactName = artifactName,
                     ).invoke()
                 jiraAttachBuildLinkInCommentResponse?.let {
-                    lifecycle("jira-attach-build  |   link                        : $it}")
+                    lifecycle("jira-attach-build  |   link                          : ${it.self}}")
                 }
             }
         }

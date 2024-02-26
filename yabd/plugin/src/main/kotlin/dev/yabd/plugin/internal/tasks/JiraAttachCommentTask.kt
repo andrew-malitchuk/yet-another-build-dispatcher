@@ -35,7 +35,7 @@ abstract class JiraAttachCommentTask : DefaultTask() {
                         comment = comment,
                     ).invoke()
                 jiraCommentResponse?.let {
-                    lifecycle("jira-comment  |   link                        : $it}")
+                    lifecycle("jira-comment  |   link                           : ${it.self}}")
                 }
             }
         }
