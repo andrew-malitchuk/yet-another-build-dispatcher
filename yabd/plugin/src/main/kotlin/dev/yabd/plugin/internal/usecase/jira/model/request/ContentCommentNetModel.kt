@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 import dev.yabd.plugin.common.model.base.NetModel
 
 data class ContentCommentNetModel(
+    @SerializedName("attrs")
+    val attrs: AttrsRequestNetModel?,
     @SerializedName("text")
     val text: String?,
     @SerializedName("type")

@@ -3,6 +3,7 @@ package dev.yabd.plugin.internal
 import com.android.build.gradle.internal.plugins.AppPlugin
 import dev.yabd.plugin.common.core.ext.capitalize
 import dev.yabd.plugin.internal.YabdExtension.Companion.yabdConfig
+import dev.yabd.plugin.internal.tasks.JiraAttachBuildTask
 import dev.yabd.plugin.internal.tasks.JiraAttachCommentTask
 import dev.yabd.plugin.internal.tasks.JiraUploadTask
 import dev.yabd.plugin.internal.tasks.TelegramUploadTask
@@ -55,6 +56,19 @@ class YabdPlugin : Plugin<Project> {
                             it.group = "jiraUpload"
                             it.description = "Task for ${variant.name} variant"
                             it.jiraCommentConfig.set(this)
+                        }
+                    }
+
+                    // TODO: recode
+                    project.tasks.register(
+                        "jiraAttachBuild${variant.name.capitalize()}",
+                        JiraAttachBuildTask::class.java,
+                    ) {
+                        yabd.jiraAttachBuildConfig.apply {
+                            tag = variant.name
+                            it.group = "jiraUpload"
+                            it.description = "Task for ${variant.name} variant"
+                            it.jiraAttachBuildConfig.set(this)
                         }
                     }
                 }
