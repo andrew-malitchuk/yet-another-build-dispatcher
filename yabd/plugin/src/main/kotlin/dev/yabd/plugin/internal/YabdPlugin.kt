@@ -11,7 +11,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class YabdPlugin : Plugin<Project> {
-    @Suppress("ForbiddenComment")
     override fun apply(project: Project) {
         with(project) {
             val yabd = yabdConfig()
@@ -20,59 +19,63 @@ class YabdPlugin : Plugin<Project> {
                     project.extensions.getByType(com.android.build.gradle.AppExtension::class.java)
 
                 androidExtension.applicationVariants.all { variant ->
-
-                    // TODO: recode
-                    project.tasks.register(
-                        "telegramUpload${variant.name.capitalize()}",
-                        TelegramUploadTask::class.java,
-                    ) {
-                        yabd.telegram.apply {
-                            tag = variant.name
-                            it.group = "telegramUpload"
-                            it.description = "Task for ${variant.name} variant"
-                            it.telegramConfig.set(this)
+                    project.tasks.apply {
+                        register(
+                            "$TELEGRAM_UPLOAD${variant.name.capitalize()}",
+                            TelegramUploadTask::class.java,
+                        ) {
+                            yabd.telegram.apply {
+                                tag = variant.name
+                                it.group = "telegramUpload"
+                                it.description = "Task for ${variant.name} variant"
+                                it.telegramConfig.set(this)
+                            }
                         }
-                    }
 
-                    // TODO: recode
-                    project.tasks.register(
-                        "jiraUpload${variant.name.capitalize()}",
-                        JiraUploadTask::class.java,
-                    ) {
-                        yabd.jira.apply {
-                            tag = variant.name
-                            it.group = "jiraUpload"
-                            it.description = "Task for ${variant.name} variant"
-                            it.jiraConfig.set(this)
+                        register(
+                            "$JIRA_UPLOAD${variant.name.capitalize()}",
+                            JiraUploadTask::class.java,
+                        ) {
+                            yabd.jira.apply {
+                                tag = variant.name
+                                it.group = "jiraUpload"
+                                it.description = "Task for ${variant.name} variant"
+                                it.jiraConfig.set(this)
+                            }
                         }
-                    }
 
-                    // TODO: recode
-                    project.tasks.register(
-                        "jiraComment${variant.name.capitalize()}",
-                        JiraAttachCommentTask::class.java,
-                    ) {
-                        yabd.jiraCommentConfig.apply {
-                            it.group = "jiraUpload"
-                            it.description = "Task for ${variant.name} variant"
-                            it.jiraCommentConfig.set(this)
+                        register(
+                            "$JIRA_COMMENT${variant.name.capitalize()}",
+                            JiraAttachCommentTask::class.java,
+                        ) {
+                            yabd.jiraCommentConfig.apply {
+                                it.group = "jiraUpload"
+                                it.description = "Task for ${variant.name} variant"
+                                it.jiraCommentConfig.set(this)
+                            }
                         }
-                    }
 
-                    // TODO: recode
-                    project.tasks.register(
-                        "jiraAttachBuild${variant.name.capitalize()}",
-                        JiraAttachBuildTask::class.java,
-                    ) {
-                        yabd.jiraAttachBuildConfig.apply {
-                            tag = variant.name
-                            it.group = "jiraUpload"
-                            it.description = "Task for ${variant.name} variant"
-                            it.jiraAttachBuildConfig.set(this)
+                        register(
+                            "$JIRA_ATTACH_BUILD${variant.name.capitalize()}",
+                            JiraAttachBuildTask::class.java,
+                        ) {
+                            yabd.jiraAttachBuildConfig.apply {
+                                tag = variant.name
+                                it.group = "jiraUpload"
+                                it.description = "Task for ${variant.name} variant"
+                                it.jiraAttachBuildConfig.set(this)
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    companion object {
+        const val JIRA_ATTACH_BUILD = "jiraAttachBuild"
+        const val JIRA_COMMENT = "jiraComment"
+        const val JIRA_UPLOAD = "jiraUpload"
+        const val TELEGRAM_UPLOAD = "telegramUpload"
     }
 }

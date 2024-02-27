@@ -1,8 +1,6 @@
 package dev.yabd.plugin.internal.config.jira
 
-@Suppress("ForbiddenComment")
 open class JiraCommentConfig {
-    // TODO: regex for email
     var email: String? = null
     var token: String? = null
     var jiraCloudInstance: String? = null

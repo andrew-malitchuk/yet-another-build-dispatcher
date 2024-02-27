@@ -12,21 +12,13 @@ open class YabdExtension {
     val jiraCommentConfig = JiraCommentConfig()
     val jiraAttachBuildConfig = JiraAttachBuildConfig()
 
-    fun telegram(configure: TelegramConfig.() -> Unit) {
-        telegram.configure()
-    }
+    fun telegram(configure: TelegramConfig.() -> Unit) = telegram.configure()
 
-    fun jira(configure: JiraConfig.() -> Unit) {
-        jira.configure()
-    }
+    fun jira(configure: JiraConfig.() -> Unit) = jira.configure()
 
-    fun jiraComment(configure: JiraCommentConfig.() -> Unit) {
-        jiraCommentConfig.configure()
-    }
+    fun jiraComment(configure: JiraCommentConfig.() -> Unit) = jiraCommentConfig.configure()
 
-    fun jiraAttachBuild(configure: JiraAttachBuildConfig.() -> Unit) {
-        jiraAttachBuildConfig.configure()
-    }
+    fun jiraAttachBuild(configure: JiraAttachBuildConfig.() -> Unit) = jiraAttachBuildConfig.configure()
 
     companion object {
         internal fun Project.yabdConfig(): YabdExtension = extensions.create("yabd", YabdExtension::class.java)

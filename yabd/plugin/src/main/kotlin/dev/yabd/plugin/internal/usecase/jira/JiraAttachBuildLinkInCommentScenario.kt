@@ -49,7 +49,6 @@ class JiraAttachBuildLinkInCommentScenario(
                             jiraFileUpload = jiraFileUploadResponse,
                         ),
                 )
-
             return jiraLeaveCommentUseCase()
         } else {
             throw GradleException("Failed to upload a build")

@@ -24,7 +24,6 @@ abstract class JiraUploadTask : DefaultTask() {
     fun action() {
         with(jiraConfig.get()) {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
-
             logger.apply {
                 lifecycle("jira-config  |   buildVariant                : $tag")
                 lifecycle("jira-config  |   email                       : $email")
