@@ -1,6 +1,9 @@
-package dev.yabd.plugin.internal.tasks
+package dev.yabd.plugin.internal.tasks.jira
 
-import dev.yabd.plugin.internal.config.JiraCommentConfig
+import dev.yabd.plugin.internal.config.jira.JiraCommentConfig
+import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
+import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
+import dev.yabd.plugin.internal.core.model.jira.JiraTicket
 import dev.yabd.plugin.internal.usecase.jira.JiraLeaveCommentUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
@@ -17,7 +20,6 @@ abstract class JiraAttachCommentTask : DefaultTask() {
     abstract val jiraCommentConfig: Property<JiraCommentConfig>
 
     @TaskAction
-    @Suppress("ForbiddenComment")
     fun action() {
         with(jiraCommentConfig.get()) {
             logger.apply {
@@ -28,10 +30,9 @@ abstract class JiraAttachCommentTask : DefaultTask() {
                 lifecycle("jira-comment  |   comment                        : $comment")
                 val jiraCommentResponse =
                     JiraLeaveCommentUseCase(
-                        email = email,
-                        token = token,
-                        jiraCloudInstance = jiraCloudInstance,
-                        ticket = ticket,
+                        authorization = JiraAuthorization(email, token),
+                        jiraCloudInstance = JiraCloudInstance(jiraCloudInstance),
+                        ticket = JiraTicket(ticket),
                         comment = comment,
                     ).invoke()
                 jiraCommentResponse?.let {

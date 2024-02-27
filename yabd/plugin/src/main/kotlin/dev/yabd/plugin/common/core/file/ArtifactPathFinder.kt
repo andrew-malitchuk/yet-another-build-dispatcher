@@ -29,11 +29,7 @@ object ArtifactPathFinder {
                     )
                 }
 
-        return if (buildPath.isFileValid) {
-            buildPath
-        } else {
-            throw GradleException("`$buildPath` is invalid; please, check it")
-        }
+        return buildPath
     }
 
     /**
@@ -58,12 +54,7 @@ object ArtifactPathFinder {
         return if (path.isNullOrBlank()) {
             detectDefaultArtifactPath(this, tag)
         } else {
-            val temp = ArtifactPath(path)
-            if (temp.isFileValid) {
-                temp
-            } else {
-                throw InvalidUserDataException("Invalid file path")
-            }
+            ArtifactPath(path)
         }
     }
 }

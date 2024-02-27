@@ -1,9 +1,9 @@
 package dev.yabd.plugin.internal
 
-import dev.yabd.plugin.internal.config.JiraAttachBuildConfig
-import dev.yabd.plugin.internal.config.JiraCommentConfig
-import dev.yabd.plugin.internal.config.JiraConfig
-import dev.yabd.plugin.internal.config.TelegramConfig
+import dev.yabd.plugin.internal.config.jira.JiraAttachBuildConfig
+import dev.yabd.plugin.internal.config.jira.JiraCommentConfig
+import dev.yabd.plugin.internal.config.jira.JiraConfig
+import dev.yabd.plugin.internal.config.telegram.TelegramConfig
 import org.gradle.api.Project
 
 open class YabdExtension {

@@ -2,9 +2,11 @@ package dev.yabd.plugin.internal.usecase.jira
 
 import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
+import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
+import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
+import dev.yabd.plugin.internal.core.model.jira.JiraTicket
 import dev.yabd.plugin.internal.data.JiraApiService.uploadFile
 import dev.yabd.plugin.internal.usecase.base.UseCase
-import dev.yabd.plugin.internal.usecase.jira.model.request.JiraAuthorizationNetModel
 import dev.yabd.plugin.internal.usecase.jira.model.response.JiraFileUploadResponseNetModel
 import dev.yabd.plugin.internal.usecase.jira.model.response.JiraFileUploadResponseNetModel.Companion.toJiraFileUploadResponseNetModel
 import org.gradle.api.GradleException
@@ -18,29 +20,15 @@ import java.io.File
  * https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-attachments/#api-group-issue-attachments
  */
 class JiraFileUploadUseCase(
-    private val email: String?,
-    private val token: String?,
-    private val jiraCloudInstance: String?,
-    private val ticket: String?,
+    private val authorization: JiraAuthorization,
+    private val jiraCloudInstance: JiraCloudInstance,
+    private val ticket: JiraTicket,
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
     @Suppress("ForbiddenComment")
     override fun invoke(): JiraFileUploadResponseNetModel? {
-        require(!email.isNullOrBlank()) {
-            "`email` is invalid; please, check it"
-        }
-        require(!token.isNullOrBlank()) {
-            "`token` is invalid; please, check it"
-        }
-        require(!jiraCloudInstance.isNullOrBlank()) {
-            "`jiraCloudInstance` is invalid; please, check it"
-        }
-        require(!ticket.isNullOrBlank()) {
-            "`ticket` is invalid; please, check it"
-        }
-
-        var file = File(artifactPath.path)
+        var file = File(artifactPath.value)
 
         // TODO: recode
         if (!artifactName.isNullOrBlank()) {
@@ -67,7 +55,7 @@ class JiraFileUploadUseCase(
             ApacheClient().uploadFile(
                 jiraCloudInstance,
                 ticket,
-                JiraAuthorizationNetModel(email, token),
+                authorization,
                 body,
             )
         return if (response.status.successful) {

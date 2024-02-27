@@ -1,4 +1,4 @@
-package dev.yabd.plugin.internal.config
+package dev.yabd.plugin.internal.config.jira
 
 @Suppress("ForbiddenComment")
 open class JiraAttachBuildConfig {

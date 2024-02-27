@@ -2,10 +2,11 @@ package dev.yabd.plugin.internal.usecase.telegram
 
 import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.data.TelegramApiService.Url.Variables.DOCUMENT
 import dev.yabd.plugin.internal.data.TelegramApiService.uploadFile
 import dev.yabd.plugin.internal.usecase.base.UseCase
-import dev.yabd.plugin.internal.usecase.telegram.model.TelegramAuthorizationNetModel
 import dev.yabd.plugin.internal.usecase.telegram.model.TelegramResponseNetModel
 import dev.yabd.plugin.internal.usecase.telegram.model.TelegramResponseNetModel.Companion.toTelegramResponseNetModel
 import org.gradle.api.GradleException
@@ -24,20 +25,13 @@ import java.io.File
  * [API documentation] (https://core.telegram.org/bots/api#senddocument)
  */
 class TelegramFileUploadUseCase(
-    private val chatId: String?,
-    private val token: String?,
+    private val chatId: TelegramChatId,
+    private val token: TelegramToken,
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
     override operator fun invoke(): TelegramResponseNetModel? {
-        require(!chatId.isNullOrBlank()) {
-            "`chatId` is invalid; please, check it"
-        }
-        require(!token.isNullOrBlank()) {
-            "`token` is invalid; please, check it"
-        }
-
-        var file = File(artifactPath.path)
+        var file = File(artifactPath.value)
 
         if (!artifactName.isNullOrBlank()) {
             if (artifactName.containsExtension("apk")) {
@@ -58,7 +52,7 @@ class TelegramFileUploadUseCase(
                         ),
                 )
 
-        val response = ApacheClient().uploadFile(chatId, TelegramAuthorizationNetModel(token), body)
+        val response = ApacheClient().uploadFile(chatId, token, body)
 
         return if (response.status.successful) {
             response.toTelegramResponseNetModel()

@@ -3,10 +3,10 @@ package dev.yabd.plugin.internal
 import com.android.build.gradle.internal.plugins.AppPlugin
 import dev.yabd.plugin.common.core.ext.capitalize
 import dev.yabd.plugin.internal.YabdExtension.Companion.yabdConfig
-import dev.yabd.plugin.internal.tasks.JiraAttachBuildTask
-import dev.yabd.plugin.internal.tasks.JiraAttachCommentTask
-import dev.yabd.plugin.internal.tasks.JiraUploadTask
-import dev.yabd.plugin.internal.tasks.TelegramUploadTask
+import dev.yabd.plugin.internal.tasks.jira.JiraAttachBuildTask
+import dev.yabd.plugin.internal.tasks.jira.JiraAttachCommentTask
+import dev.yabd.plugin.internal.tasks.jira.JiraUploadTask
+import dev.yabd.plugin.internal.tasks.telegram.TelegramUploadTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

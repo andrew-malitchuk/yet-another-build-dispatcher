@@ -1,7 +1,9 @@
 package dev.yabd.plugin.internal.data
 
+import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
+import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
+import dev.yabd.plugin.internal.core.model.jira.JiraTicket
 import dev.yabd.plugin.internal.usecase.jira.JiraFileUploadUseCase
-import dev.yabd.plugin.internal.usecase.jira.model.request.JiraAuthorizationNetModel
 import org.http4k.core.Body
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method
@@ -11,24 +13,24 @@ import java.util.Base64
 
 object JiraApiService {
     fun HttpHandler.leaveComment(
-        jiraCloudInstance: String,
-        ticket: String,
-        authorization: JiraAuthorizationNetModel,
+        jiraCloudInstance: JiraCloudInstance,
+        ticket: JiraTicket,
+        authorization: JiraAuthorization,
         body: Body,
     ): Response {
         fun getPath(
-            jiraCloudInstance: String,
-            ticket: String,
+            jiraCloudInstance: JiraCloudInstance,
+            ticket: JiraTicket,
         ): String {
             return "${
                 Url.BASE_URL.replace(
                     "{${Url.Variables.JIRA_CLOUD_INSTANCE}}",
-                    jiraCloudInstance,
+                    jiraCloudInstance.value ?: run { throw IllegalArgumentException("`jiraCloudInstance` is invalid") },
                 )
             }${
                 Url.PATH.replace(
                     "{${Url.Variables.TICKET}}",
-                    ticket,
+                    ticket.value ?: run { throw IllegalArgumentException("`ticket` is invalid") },
                 )
             }"
         }
@@ -51,24 +53,24 @@ object JiraApiService {
     }
 
     fun HttpHandler.uploadFile(
-        jiraCloudInstance: String,
-        ticket: String,
-        authorization: JiraAuthorizationNetModel,
+        jiraCloudInstance: JiraCloudInstance,
+        ticket: JiraTicket,
+        authorization: JiraAuthorization,
         body: MultipartFormBody,
     ): Response {
         fun getPath(
-            jiraCloudInstance: String,
-            ticket: String,
+            jiraCloudInstance: JiraCloudInstance,
+            ticket: JiraTicket,
         ): String {
             return "${
                 JiraFileUploadUseCase.BASE_URL.replace(
                     "{${JiraFileUploadUseCase.Companion.Variables.JIRA_CLOUD_INSTANCE}}",
-                    jiraCloudInstance,
+                    jiraCloudInstance.value ?: run { throw IllegalArgumentException("`jiraCloudInstance` is invalid") },
                 )
             }${
                 JiraFileUploadUseCase.PATH.replace(
                     "{${JiraFileUploadUseCase.Companion.Variables.TICKET}}",
-                    ticket,
+                    ticket.value ?: run { throw IllegalArgumentException("`ticket` is invalid") },
                 )
             }"
         }

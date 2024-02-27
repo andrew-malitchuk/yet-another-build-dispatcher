@@ -1,8 +1,9 @@
 package dev.yabd.plugin.internal.data
 
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.data.TelegramApiService.Url.BASE_URL
 import dev.yabd.plugin.internal.data.TelegramApiService.Url.PATH
-import dev.yabd.plugin.internal.usecase.telegram.model.TelegramAuthorizationNetModel
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method
 import org.http4k.core.MultipartFormBody
@@ -10,8 +11,8 @@ import org.http4k.core.Response
 
 object TelegramApiService {
     fun HttpHandler.uploadFile(
-        chatId: String,
-        authorization: TelegramAuthorizationNetModel,
+        chatId: TelegramChatId,
+        authorization: TelegramToken,
         body: MultipartFormBody,
     ): Response {
         fun getPath(botToken: String): String {
@@ -21,11 +22,15 @@ object TelegramApiService {
         val request =
             org.http4k.core.Request(
                 method = Method.POST,
-                uri = getPath(authorization.token),
+                uri =
+                    getPath(
+                        authorization.value
+                            ?: run { throw IllegalArgumentException("`authorization` is invalid") },
+                    ),
             )
                 .header("content-type", "multipart/form-data; boundary=${body.boundary}")
                 .body(body)
-                .query(Url.Variables.CHAT_ID, chatId)
+                .query(Url.Variables.CHAT_ID, chatId.value)
 
         return invoke(request)
     }
