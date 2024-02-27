@@ -2,15 +2,17 @@ package dev.yabd.plugin.internal.usecase.telegram
 
 import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
+import dev.yabd.plugin.internal.data.TelegramApiService.Url.Variables.DOCUMENT
+import dev.yabd.plugin.internal.data.TelegramApiService.uploadFile
 import dev.yabd.plugin.internal.usecase.base.UseCase
 import dev.yabd.plugin.internal.usecase.telegram.model.TelegramResponseNetModel
 import dev.yabd.plugin.internal.usecase.telegram.model.TelegramResponseNetModel.Companion.toTelegramResponseNetModel
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 import org.http4k.core.ContentType
-import org.http4k.core.Method
 import org.http4k.core.MultipartFormBody
-import org.http4k.core.Request
 import org.http4k.lens.MultipartFormFile
 import java.io.File
 
@@ -23,22 +25,13 @@ import java.io.File
  * [API documentation] (https://core.telegram.org/bots/api#senddocument)
  */
 class TelegramFileUploadUseCase(
-    private val chatId: String?,
-    private val token: String?,
+    private val chatId: TelegramChatId,
+    private val token: TelegramToken,
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
     override operator fun invoke(): TelegramResponseNetModel? {
-        require(!chatId.isNullOrBlank()) {
-            "`chatId` is invalid; please, check it"
-        }
-        require(!token.isNullOrBlank()) {
-            "`token` is invalid; please, check it"
-        }
-
-        val client = ApacheClient()
-
-        var file = File(artifactPath.path)
+        var file = File(artifactPath.value)
 
         if (!artifactName.isNullOrBlank()) {
             if (artifactName.containsExtension("apk")) {
@@ -51,7 +44,7 @@ class TelegramFileUploadUseCase(
         val body =
             MultipartFormBody()
                 .plus(
-                    Variables.DOCUMENT to
+                    DOCUMENT to
                         MultipartFormFile(
                             file.name,
                             ContentType.OCTET_STREAM,
@@ -59,16 +52,8 @@ class TelegramFileUploadUseCase(
                         ),
                 )
 
-        val request =
-            Request(
-                method = Method.POST,
-                uri = getPath(token),
-            )
-                .header("content-type", "multipart/form-data; boundary=${body.boundary}")
-                .body(body)
-                .query(Variables.CHAT_ID, chatId)
+        val response = ApacheClient().uploadFile(chatId, token, body)
 
-        val response = client(request)
         return if (response.status.successful) {
             response.toTelegramResponseNetModel()
         } else {
@@ -77,20 +62,5 @@ class TelegramFileUploadUseCase(
                     "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
-    }
-
-    private fun getPath(botToken: String): String {
-        return "$BASE_URL${PATH.replace("{${Variables.BOT_TOKEN}}", botToken)}"
-    }
-
-    companion object {
-        object Variables {
-            const val BOT_TOKEN = "botToken"
-            const val CHAT_ID = "chat_id"
-            const val DOCUMENT = "document"
-        }
-
-        const val BASE_URL = "https://api.telegram.org"
-        const val PATH = "/bot{${Variables.BOT_TOKEN}}/sendDocument"
     }
 }

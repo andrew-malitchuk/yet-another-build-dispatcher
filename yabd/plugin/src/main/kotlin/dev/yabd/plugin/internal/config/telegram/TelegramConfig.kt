@@ -1,4 +1,4 @@
-package dev.yabd.plugin.internal.config
+package dev.yabd.plugin.internal.config.telegram
 
 open class TelegramConfig {
     var chatId: String? = null
