@@ -5,18 +5,8 @@ import dev.yabd.plugin.internal.usecase.jira.model.request.ContentCommentNetMode
 import dev.yabd.plugin.internal.usecase.jira.model.request.ContentNetModel
 import dev.yabd.plugin.internal.usecase.jira.model.request.JiraCommentRequestNetModel
 import dev.yabd.plugin.internal.usecase.jira.model.response.JiraFileUploadResponseNetModel
-import java.lang.IllegalArgumentException
 
 object JiraUtils {
-    @Suppress("SwallowedException")
-    fun getDownloadLink(response: JiraFileUploadResponseNetModel): String? {
-        return try {
-            return response.firstOrNull()?.content
-        } catch (ex: IllegalArgumentException) {
-            null
-        }
-    }
-
     fun getDownloadLinkComment(comment: String): JiraCommentRequestNetModel {
         return JiraCommentRequestNetModel(
             body =

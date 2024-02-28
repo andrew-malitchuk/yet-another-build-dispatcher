@@ -6,11 +6,13 @@ import dev.yabd.plugin.internal.YabdExtension.Companion.yabdConfig
 import dev.yabd.plugin.internal.tasks.jira.JiraAttachBuildTask
 import dev.yabd.plugin.internal.tasks.jira.JiraAttachCommentTask
 import dev.yabd.plugin.internal.tasks.jira.JiraUploadTask
+import dev.yabd.plugin.internal.tasks.slack.SlackUploadTask
 import dev.yabd.plugin.internal.tasks.telegram.TelegramUploadTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 class YabdPlugin : Plugin<Project> {
+    @Suppress("LongMethod")
     override fun apply(project: Project) {
         with(project) {
             val yabd = yabdConfig()
@@ -66,6 +68,18 @@ class YabdPlugin : Plugin<Project> {
                                 it.jiraAttachBuildConfig.set(this)
                             }
                         }
+
+                        register(
+                            "$SLACK_UPLOAD${variant.name.capitalize()}",
+                            SlackUploadTask::class.java,
+                        ) {
+                            yabd.slackConfig.apply {
+                                tag = variant.name
+                                it.group = "slackUpload"
+                                it.description = "Task for ${variant.name} variant"
+                                it.slackConfig.set(this)
+                            }
+                        }
                     }
                 }
             }
@@ -77,5 +91,6 @@ class YabdPlugin : Plugin<Project> {
         const val JIRA_COMMENT = "jiraComment"
         const val JIRA_UPLOAD = "jiraUpload"
         const val TELEGRAM_UPLOAD = "telegramUpload"
+        const val SLACK_UPLOAD = "slackUpload"
     }
 }
