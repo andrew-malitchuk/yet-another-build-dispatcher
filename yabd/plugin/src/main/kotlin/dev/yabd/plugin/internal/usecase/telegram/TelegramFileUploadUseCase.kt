@@ -4,11 +4,11 @@ import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
 import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
-import dev.yabd.plugin.internal.data.TelegramApiService.Url.Variables.DOCUMENT
-import dev.yabd.plugin.internal.data.TelegramApiService.uploadFile
+import dev.yabd.plugin.internal.data.telegram.TelegramApiService.Url.Variables.DOCUMENT
+import dev.yabd.plugin.internal.data.telegram.TelegramApiService.uploadFile
+import dev.yabd.plugin.internal.data.telegram.model.response.TelegramResponseNetModel
+import dev.yabd.plugin.internal.data.telegram.model.response.TelegramResponseNetModel.Companion.toTelegramResponseNetModel
 import dev.yabd.plugin.internal.usecase.base.UseCase
-import dev.yabd.plugin.internal.usecase.telegram.model.TelegramResponseNetModel
-import dev.yabd.plugin.internal.usecase.telegram.model.TelegramResponseNetModel.Companion.toTelegramResponseNetModel
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 import org.http4k.core.ContentType

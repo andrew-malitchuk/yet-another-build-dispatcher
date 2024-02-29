@@ -5,8 +5,8 @@ import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
 import dev.yabd.plugin.internal.core.utils.JiraUtils
+import dev.yabd.plugin.internal.data.jira.model.response.JiraCommentResponseNetModel
 import dev.yabd.plugin.internal.usecase.base.UseCase
-import dev.yabd.plugin.internal.usecase.jira.model.response.JiraCommentResponseNetModel
 import org.gradle.api.GradleException
 
 // TODO: add some wrapper over jira configs

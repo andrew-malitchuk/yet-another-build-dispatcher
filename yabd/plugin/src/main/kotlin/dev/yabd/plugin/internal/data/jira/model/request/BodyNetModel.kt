@@ -1,11 +1,13 @@
-package dev.yabd.plugin.internal.usecase.jira.model.request
+package dev.yabd.plugin.internal.data.jira.model.request
 
 import com.google.gson.annotations.SerializedName
 import dev.yabd.plugin.common.model.base.NetModel
 
-data class ContentNetModel(
+data class BodyNetModel(
     @SerializedName("content")
-    val content: List<ContentCommentNetModel>?,
+    val content: List<ContentNetModel>?,
     @SerializedName("type")
     val type: String?,
+    @SerializedName("version")
+    val version: Int?,
 ) : NetModel

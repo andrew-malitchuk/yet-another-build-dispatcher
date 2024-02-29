@@ -4,10 +4,10 @@ import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
 import dev.yabd.plugin.internal.core.model.slack.SlackChannel
 import dev.yabd.plugin.internal.core.model.slack.SlackToken
-import dev.yabd.plugin.internal.data.SlackApiService.foo
+import dev.yabd.plugin.internal.data.slack.SlackApiService.foo
+import dev.yabd.plugin.internal.data.slack.model.response.SlackResponseNetModel
+import dev.yabd.plugin.internal.data.slack.model.response.SlackResponseNetModel.Companion.toSlackResponseNetModel
 import dev.yabd.plugin.internal.usecase.base.UseCase
-import dev.yabd.plugin.internal.usecase.slack.model.SlackResponseNetModel
-import dev.yabd.plugin.internal.usecase.slack.model.SlackResponseNetModel.Companion.toSlackResponseNetModel
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 import org.http4k.core.ContentType

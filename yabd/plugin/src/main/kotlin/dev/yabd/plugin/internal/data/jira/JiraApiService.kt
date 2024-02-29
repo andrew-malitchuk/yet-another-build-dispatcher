@@ -1,4 +1,4 @@
-package dev.yabd.plugin.internal.data
+package dev.yabd.plugin.internal.data.jira
 
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance

@@ -1,4 +1,4 @@
-package dev.yabd.plugin.internal.usecase.telegram.model
+package dev.yabd.plugin.internal.data.telegram.model.response
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException

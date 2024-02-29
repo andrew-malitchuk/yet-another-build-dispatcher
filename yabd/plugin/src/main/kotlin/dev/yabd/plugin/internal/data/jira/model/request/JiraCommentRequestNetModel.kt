@@ -1,4 +1,4 @@
-package dev.yabd.plugin.internal.usecase.jira.model.request
+package dev.yabd.plugin.internal.data.jira.model.request
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException

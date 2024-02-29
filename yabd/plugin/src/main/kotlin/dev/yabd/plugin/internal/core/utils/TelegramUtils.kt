@@ -1,7 +1,7 @@
 package dev.yabd.plugin.internal.core.utils
 
 import dev.yabd.plugin.internal.core.utils.TelegramUtils.Url.START_INDEX
-import dev.yabd.plugin.internal.usecase.telegram.model.TelegramResponseNetModel
+import dev.yabd.plugin.internal.data.telegram.model.response.TelegramResponseNetModel
 import java.lang.IllegalArgumentException
 
 object TelegramUtils {

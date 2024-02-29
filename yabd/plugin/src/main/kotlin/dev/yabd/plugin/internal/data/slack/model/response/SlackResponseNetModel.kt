@@ -1,4 +1,4 @@
-package dev.yabd.plugin.internal.usecase.slack.model
+package dev.yabd.plugin.internal.data.slack.model.response
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException

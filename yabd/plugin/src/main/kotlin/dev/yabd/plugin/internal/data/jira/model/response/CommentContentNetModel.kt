@@ -1,9 +1,9 @@
-package dev.yabd.plugin.internal.usecase.jira.model.request
+package dev.yabd.plugin.internal.data.jira.model.response
 
 import com.google.gson.annotations.SerializedName
 import dev.yabd.plugin.common.model.base.NetModel
 
-data class ContentCommentNetModel(
+data class CommentContentNetModel(
     @SerializedName("text")
     val text: String?,
     @SerializedName("type")

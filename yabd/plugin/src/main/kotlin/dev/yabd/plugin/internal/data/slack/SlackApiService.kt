@@ -1,4 +1,4 @@
-package dev.yabd.plugin.internal.data
+package dev.yabd.plugin.internal.data.slack
 
 import dev.yabd.plugin.internal.core.model.slack.SlackToken
 import org.http4k.core.HttpHandler

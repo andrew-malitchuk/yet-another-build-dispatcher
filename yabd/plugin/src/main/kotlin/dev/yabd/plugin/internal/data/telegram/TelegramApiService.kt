@@ -1,9 +1,9 @@
-package dev.yabd.plugin.internal.data
+package dev.yabd.plugin.internal.data.telegram
 
 import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
-import dev.yabd.plugin.internal.data.TelegramApiService.Url.BASE_URL
-import dev.yabd.plugin.internal.data.TelegramApiService.Url.PATH
+import dev.yabd.plugin.internal.data.telegram.TelegramApiService.Url.BASE_URL
+import dev.yabd.plugin.internal.data.telegram.TelegramApiService.Url.PATH
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method
 import org.http4k.core.MultipartFormBody
