@@ -35,10 +35,9 @@ class YabdPlugin : Plugin<Project> {
         }
     }
 
-
     private fun TaskContainer.configureSlackUpload(
         variant: ApplicationVariant,
-        yabd: YabdExtension
+        yabd: YabdExtension,
     ) {
         register(
             "$SLACK_UPLOAD${variant.name.capitalize()}",
@@ -55,7 +54,7 @@ class YabdPlugin : Plugin<Project> {
 
     private fun TaskContainer.configureJiraAttackBuild(
         variant: ApplicationVariant,
-        yabd: YabdExtension
+        yabd: YabdExtension,
     ) {
         register(
             "$JIRA_ATTACH_BUILD${variant.name.capitalize()}",
@@ -72,7 +71,7 @@ class YabdPlugin : Plugin<Project> {
 
     private fun TaskContainer.configureJiraComment(
         variant: ApplicationVariant,
-        yabd: YabdExtension
+        yabd: YabdExtension,
     ) {
         register(
             "$JIRA_COMMENT${variant.name.capitalize()}",
@@ -88,7 +87,7 @@ class YabdPlugin : Plugin<Project> {
 
     private fun TaskContainer.configureJiraUpload(
         variant: ApplicationVariant,
-        yabd: YabdExtension
+        yabd: YabdExtension,
     ) {
         register(
             "$JIRA_UPLOAD${variant.name.capitalize()}",
@@ -105,7 +104,7 @@ class YabdPlugin : Plugin<Project> {
 
     private fun TaskContainer.configureTelegramUpload(
         variant: ApplicationVariant,
-        yabd: YabdExtension
+        yabd: YabdExtension,
     ) {
         register(
             "$TELEGRAM_UPLOAD${variant.name.capitalize()}",

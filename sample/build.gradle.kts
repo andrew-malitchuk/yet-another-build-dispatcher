@@ -91,6 +91,10 @@ yabd {
         jiraCloudInstance = project.properties["jiraCloudInstance"] as String
         comment = "Your build: {URL_TO_REPLACE}"
     }
+    slackConfig {
+        channel = project.properties["slackChannel"] as String
+        token = project.properties["slackToken"] as String
+    }
 }
 
 dependencies {
