@@ -4,11 +4,11 @@ import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
 import dev.yabd.plugin.internal.core.utils.JiraUtils.getDownloadLinkComment
-import dev.yabd.plugin.internal.data.JiraApiService.leaveComment
+import dev.yabd.plugin.internal.data.jira.JiraApiService.leaveComment
+import dev.yabd.plugin.internal.data.jira.model.request.JiraCommentRequestNetModel.Companion.toRequestBody
+import dev.yabd.plugin.internal.data.jira.model.response.JiraCommentResponseNetModel
+import dev.yabd.plugin.internal.data.jira.model.response.JiraCommentResponseNetModel.Companion.toJiraCommentResponseNetModel
 import dev.yabd.plugin.internal.usecase.base.UseCase
-import dev.yabd.plugin.internal.usecase.jira.model.request.JiraCommentRequestNetModel.Companion.toRequestBody
-import dev.yabd.plugin.internal.usecase.jira.model.response.JiraCommentResponseNetModel
-import dev.yabd.plugin.internal.usecase.jira.model.response.JiraCommentResponseNetModel.Companion.toJiraCommentResponseNetModel
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 

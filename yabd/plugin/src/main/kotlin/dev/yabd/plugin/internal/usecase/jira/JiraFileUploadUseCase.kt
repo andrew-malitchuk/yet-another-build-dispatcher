@@ -5,10 +5,10 @@ import dev.yabd.plugin.common.model.ArtifactPath
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
-import dev.yabd.plugin.internal.data.JiraApiService.uploadFile
+import dev.yabd.plugin.internal.data.jira.JiraApiService.uploadFile
+import dev.yabd.plugin.internal.data.jira.model.response.JiraFileUploadResponseNetModel
+import dev.yabd.plugin.internal.data.jira.model.response.JiraFileUploadResponseNetModel.Companion.toJiraFileUploadResponseNetModel
 import dev.yabd.plugin.internal.usecase.base.UseCase
-import dev.yabd.plugin.internal.usecase.jira.model.response.JiraFileUploadResponseNetModel
-import dev.yabd.plugin.internal.usecase.jira.model.response.JiraFileUploadResponseNetModel.Companion.toJiraFileUploadResponseNetModel
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 import org.http4k.core.ContentType
