@@ -95,7 +95,6 @@ yabd {
         channel = project.properties["slackChannel"] as String
         token = project.properties["slackToken"] as String
     }
-
 }
 
 dependencies {
