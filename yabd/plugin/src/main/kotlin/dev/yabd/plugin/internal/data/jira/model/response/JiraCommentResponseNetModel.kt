@@ -8,9 +8,9 @@ import org.http4k.core.Response
 
 data class JiraCommentResponseNetModel(
     @SerializedName("author")
-    val author: AuthorNetModel?,
+    val author: AuthorResponseNetModel?,
     @SerializedName("body")
-    val body: BodyNetModel?,
+    val body: BodyResponseNetModel?,
     @SerializedName("created")
     val created: String?,
     @SerializedName("id")
@@ -20,7 +20,7 @@ data class JiraCommentResponseNetModel(
     @SerializedName("self")
     val self: String?,
     @SerializedName("updateAuthor")
-    val updateAuthor: UpdateAuthorNetModel?,
+    val updateAuthor: UpdateAuthorResponseNetModel?,
     @SerializedName("updated")
     val updated: String?,
 ) : NetModel {

@@ -8,7 +8,7 @@ import org.http4k.core.Body
 
 data class JiraCommentRequestNetModel(
     @SerializedName("body")
-    val body: BodyNetModel?,
+    val body: BodyRequestNetModel?,
 ) : NetModel {
     companion object {
         @Suppress("SwallowedException")

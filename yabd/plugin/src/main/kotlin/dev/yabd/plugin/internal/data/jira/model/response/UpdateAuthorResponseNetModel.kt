@@ -3,7 +3,7 @@ package dev.yabd.plugin.internal.data.jira.model.response
 import com.google.gson.annotations.SerializedName
 import dev.yabd.plugin.common.model.base.NetModel
 
-data class UpdateAuthorNetModel(
+data class UpdateAuthorResponseNetModel(
     @SerializedName("accountId")
     val accountId: String?,
     @SerializedName("accountType")
@@ -11,7 +11,7 @@ data class UpdateAuthorNetModel(
     @SerializedName("active")
     val active: Boolean?,
     @SerializedName("avatarUrls")
-    val avatarUrls: AvatarUrlsNetModel?,
+    val avatarUrls: AvatarUrlsResponseNetModel?,
     @SerializedName("displayName")
     val displayName: String?,
     @SerializedName("emailAddress")

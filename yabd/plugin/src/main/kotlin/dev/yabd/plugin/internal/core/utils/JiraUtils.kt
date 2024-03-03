@@ -1,8 +1,8 @@
 package dev.yabd.plugin.internal.core.utils
 
-import dev.yabd.plugin.internal.data.jira.model.request.BodyNetModel
-import dev.yabd.plugin.internal.data.jira.model.request.ContentCommentNetModel
-import dev.yabd.plugin.internal.data.jira.model.request.ContentNetModel
+import dev.yabd.plugin.internal.data.jira.model.request.BodyRequestNetModel
+import dev.yabd.plugin.internal.data.jira.model.request.ContentCommentrequestNetModel
+import dev.yabd.plugin.internal.data.jira.model.request.ContentRequestNetModel
 import dev.yabd.plugin.internal.data.jira.model.request.JiraCommentRequestNetModel
 import dev.yabd.plugin.internal.data.jira.model.response.JiraFileUploadResponseNetModel
 
@@ -10,13 +10,13 @@ object JiraUtils {
     fun getDownloadLinkComment(comment: String): JiraCommentRequestNetModel {
         return JiraCommentRequestNetModel(
             body =
-                BodyNetModel(
+                BodyRequestNetModel(
                     content =
                         listOf(
-                            ContentNetModel(
+                            ContentRequestNetModel(
                                 content =
                                     listOf(
-                                        ContentCommentNetModel(
+                                        ContentCommentrequestNetModel(
                                             text = comment,
                                             type = "text",
                                         ),
