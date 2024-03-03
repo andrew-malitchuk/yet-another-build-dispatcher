@@ -11,7 +11,7 @@ object SlackApiService {
     /**
      * https://api.slack.com/methods/chat.postMessage
      */
-    fun HttpHandler.foo(
+    fun HttpHandler.attachFile(
         token: SlackToken,
         body: MultipartFormBody,
     ): Response {

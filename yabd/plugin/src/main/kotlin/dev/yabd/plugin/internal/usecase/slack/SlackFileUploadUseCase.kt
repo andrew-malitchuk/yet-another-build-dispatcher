@@ -4,7 +4,7 @@ import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
 import dev.yabd.plugin.internal.core.model.slack.SlackChannel
 import dev.yabd.plugin.internal.core.model.slack.SlackToken
-import dev.yabd.plugin.internal.data.slack.SlackApiService.foo
+import dev.yabd.plugin.internal.data.slack.SlackApiService.attachFile
 import dev.yabd.plugin.internal.data.slack.model.response.SlackResponseNetModel
 import dev.yabd.plugin.internal.data.slack.model.response.SlackResponseNetModel.Companion.toSlackResponseNetModel
 import dev.yabd.plugin.internal.usecase.base.UseCase
@@ -48,7 +48,7 @@ class SlackFileUploadUseCase(
                 .plus(
                     "channels" to "${channel.value}",
                 )
-        val response = ApacheClient().foo(token, body)
+        val response = ApacheClient().attachFile(token, body)
 
         return if (response.status.successful) {
             response.toSlackResponseNetModel()
