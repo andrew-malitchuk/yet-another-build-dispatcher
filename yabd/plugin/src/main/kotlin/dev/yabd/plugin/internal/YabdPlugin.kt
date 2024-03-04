@@ -110,6 +110,7 @@ class YabdPlugin : Plugin<Project> {
             "$TELEGRAM_UPLOAD${variant.name.capitalize()}",
             TelegramUploadTask::class.java,
         ) {
+            it.foobar = it.project.findProperty("foobar") as? Boolean ?: false
             yabd.telegram.apply {
                 tag = variant.name
                 it.group = "telegramUpload"
