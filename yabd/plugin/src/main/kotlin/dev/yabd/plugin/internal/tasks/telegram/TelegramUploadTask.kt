@@ -21,45 +21,45 @@ abstract class TelegramUploadTask : DefaultTask() {
     @get:Input
     abstract val telegramConfig: Property<TelegramConfig>
 
+    @Option(description = DEBUG_DESCRIPTION, option = DEBUG_OUTPUT)
     @get:Input
-    var foobar: Boolean = false
+    var debugOutput: Boolean = false
 
-//    // Expose a setter method to set the value of the property
-//    fun setMyArgument(value: Boolean) {
-//        this.myArgument = value
-//    }
-//
-//    fun getMyArgument() = this.myArgument
-
+    @Suppress("NestedBlockDepth")
     @TaskAction
     fun action() {
         with(telegramConfig.get()) {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
-
-            logger.apply {
-                lifecycle("telegram-config  |   isDebuggable    : $foobar")
-//                lifecycle("telegram-config  |   buildVariant    : $tag")
-//                lifecycle("telegram-config  |   chatId          : $chatId")
-//                lifecycle("telegram-config  |   token           : $token")
-//                lifecycle("telegram-config  |   filePath        : ${artifactPath.value}")
-//                artifactName?.let {
-//                    lifecycle("telegram-config  |   artifactName    : $artifactName")
-//                }
-//                val response =
-//                    TelegramFileUploadUseCase(
-//                        chatId = TelegramChatId(chatId),
-//                        token = TelegramToken(token),
-//                        artifactPath = artifactPath,
-//                        artifactName = artifactName,
-//                    ).invoke()
-//                response?.let {
-//                    lifecycle("telegram-config  |   link            : ${getDownloadLink(it)}")
-//                }
+            if (debugOutput) {
+                logger.apply {
+                    lifecycle("telegram-config  |   buildVariant    : $tag")
+                    lifecycle("telegram-config  |   chatId          : $chatId")
+                    lifecycle("telegram-config  |   token           : $token")
+                    lifecycle("telegram-config  |   filePath        : ${artifactPath.value}")
+                    artifactName?.let {
+                        lifecycle("telegram-config  |   artifactName    : $artifactName")
+                    }
+                }
+            }
+            val response =
+                TelegramFileUploadUseCase(
+                    chatId = TelegramChatId(chatId),
+                    token = TelegramToken(token),
+                    artifactPath = artifactPath,
+                    artifactName = artifactName,
+                ).invoke()
+            if (debugOutput) {
+                logger.apply {
+                    response?.let {
+                        lifecycle("telegram-config  |   link            : ${getDownloadLink(it)}")
+                    }
+                }
             }
         }
     }
 
     companion object {
-        const val IS_DEBUGGABLE = "isDebuggable"
+        const val DEBUG_OUTPUT = "debugOutput"
+        const val DEBUG_DESCRIPTION = "debugOutput"
     }
 }

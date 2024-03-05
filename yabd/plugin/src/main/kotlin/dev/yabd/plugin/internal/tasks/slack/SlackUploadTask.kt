@@ -9,6 +9,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
 
 abstract class SlackUploadTask : DefaultTask() {
     init {
@@ -19,29 +20,47 @@ abstract class SlackUploadTask : DefaultTask() {
     @get:Input
     abstract val slackConfig: Property<SlackConfig>
 
+    @Option(description = DEBUG_DESCRIPTION, option = DEBUG_OUTPUT)
+    @get:Input
+    var debugOutput: Boolean = false
+
+    @Suppress("NestedBlockDepth")
     @TaskAction
     fun action() {
         with(slackConfig.get()) {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
-            logger.apply {
-                lifecycle("slack-config |  buildVariant     : $tag")
-                lifecycle("slack-config |  channel          : $channel")
-                lifecycle("slack-config |  token            : $token")
-                lifecycle("slack-config |  filePath         : ${artifactPath.value}")
-                artifactName?.let {
-                    lifecycle("slack-config |   artifactName    : $artifactName")
+
+            if (debugOutput) {
+                logger.apply {
+                    lifecycle("slack-config |  buildVariant     : $tag")
+                    lifecycle("slack-config |  channel          : $channel")
+                    lifecycle("slack-config |  token            : $token")
+                    lifecycle("slack-config |  filePath         : ${artifactPath.value}")
+                    artifactName?.let {
+                        lifecycle("slack-config |   artifactName    : $artifactName")
+                    }
                 }
-                val response =
-                    SlackFileUploadUseCase(
-                        SlackToken(token),
-                        SlackChannel(channel),
-                        artifactPath,
-                        artifactName,
-                    ).invoke()
-                response?.file?.let {
-                    lifecycle("slack-config |   link            : ${it.permalink}")
+            }
+            val response =
+                SlackFileUploadUseCase(
+                    SlackToken(token),
+                    SlackChannel(channel),
+                    artifactPath,
+                    artifactName,
+                ).invoke()
+
+            if (debugOutput) {
+                logger.apply {
+                    response?.file?.let {
+                        lifecycle("slack-config |   link            : ${it.permalink}")
+                    }
                 }
             }
         }
+    }
+
+    companion object {
+        const val DEBUG_OUTPUT = "debugOutput"
+        const val DEBUG_DESCRIPTION = "debugOutput"
     }
 }
