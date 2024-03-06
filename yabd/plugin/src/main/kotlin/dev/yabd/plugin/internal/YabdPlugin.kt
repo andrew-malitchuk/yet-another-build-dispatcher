@@ -7,6 +7,7 @@ import dev.yabd.plugin.internal.YabdExtension.Companion.yabdConfig
 import dev.yabd.plugin.internal.tasks.jira.JiraAttachBuildTask
 import dev.yabd.plugin.internal.tasks.jira.JiraAttachCommentTask
 import dev.yabd.plugin.internal.tasks.jira.JiraUploadTask
+import dev.yabd.plugin.internal.tasks.slack.SlackMessageTask
 import dev.yabd.plugin.internal.tasks.slack.SlackUploadTask
 import dev.yabd.plugin.internal.tasks.telegram.TelegramUploadTask
 import org.gradle.api.Plugin
@@ -29,8 +30,26 @@ class YabdPlugin : Plugin<Project> {
                         configureJiraComment(variant, yabd)
                         configureJiraAttackBuild(variant, yabd)
                         configureSlackUpload(variant, yabd)
+                        configureSlackComment(variant, yabd)
                     }
                 }
+            }
+        }
+    }
+
+    private fun TaskContainer.configureSlackComment(
+        variant: ApplicationVariant,
+        yabd: YabdExtension,
+    ) {
+        register(
+            "$SLACK_COMMENT${variant.name.capitalize()}",
+            SlackMessageTask::class.java,
+        ) {
+            yabd.slackConfig.apply {
+                tag = variant.name
+                it.group = "slackComment"
+                it.description = "Task for ${variant.name} variant"
+                it.slackConfig.set(this)
             }
         }
     }
@@ -125,5 +144,6 @@ class YabdPlugin : Plugin<Project> {
         const val JIRA_UPLOAD = "jiraUpload"
         const val TELEGRAM_UPLOAD = "telegramUpload"
         const val SLACK_UPLOAD = "slackUpload"
+        const val SLACK_COMMENT = "slackComment"
     }
 }
