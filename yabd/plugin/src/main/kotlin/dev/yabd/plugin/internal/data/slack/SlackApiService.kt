@@ -12,10 +12,12 @@ object SlackApiService {
     /**
      * https://api.slack.com/methods/chat.postMessage
      */
+    @Suppress("ForbiddenComment")
     fun HttpHandler.attachFile(
         token: SlackToken,
         body: MultipartFormBody,
     ): Response {
+        // TODO: path
         val request =
             Request(Method.POST, "https://slack.com/api/files.upload")
                 .header("Authorization", "Bearer ${token.value}")

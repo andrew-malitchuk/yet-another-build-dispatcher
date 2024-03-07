@@ -43,20 +43,11 @@ abstract class SlackMessageTask : DefaultTask() {
                     }
                 }
             }
-            val response =
-                SlackLeaveCommentUseCase(
-                    SlackToken(token),
-                    SlackChannel(channel),
-                    comment = SlackMessage("foobar"),
-                ).invoke()
-
-            if (debugOutput) {
-                logger.apply {
-                    response?.file?.let {
-                        lifecycle("slack-config |   link            : ${it.permalink}")
-                    }
-                }
-            }
+            SlackLeaveCommentUseCase(
+                SlackToken(token),
+                SlackChannel(channel),
+                comment = SlackMessage("foobar"),
+            ).invoke()
         }
     }
 

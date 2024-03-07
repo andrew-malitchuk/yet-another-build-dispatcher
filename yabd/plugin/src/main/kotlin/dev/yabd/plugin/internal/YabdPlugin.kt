@@ -9,6 +9,7 @@ import dev.yabd.plugin.internal.tasks.jira.JiraAttachCommentTask
 import dev.yabd.plugin.internal.tasks.jira.JiraUploadTask
 import dev.yabd.plugin.internal.tasks.slack.SlackMessageTask
 import dev.yabd.plugin.internal.tasks.slack.SlackUploadTask
+import dev.yabd.plugin.internal.tasks.telegram.TelegramSendMessageTask
 import dev.yabd.plugin.internal.tasks.telegram.TelegramUploadTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -26,6 +27,7 @@ class YabdPlugin : Plugin<Project> {
                 androidExtension.applicationVariants.all { variant ->
                     project.tasks.apply {
                         configureTelegramUpload(variant, yabd)
+                        configureTelegramSendMessage(variant, yabd)
                         configureJiraUpload(variant, yabd)
                         configureJiraComment(variant, yabd)
                         configureJiraAttackBuild(variant, yabd)
@@ -138,11 +140,29 @@ class YabdPlugin : Plugin<Project> {
         }
     }
 
+    private fun TaskContainer.configureTelegramSendMessage(
+        variant: ApplicationVariant,
+        yabd: YabdExtension,
+    ) {
+        register(
+            "$TELEGRAM_SEND_MESSAGE${variant.name.capitalize()}",
+            TelegramSendMessageTask::class.java,
+        ) {
+            yabd.telegram.apply {
+                tag = variant.name
+                it.group = "telegramUpload"
+                it.description = "Task for ${variant.name} variant"
+                it.telegramConfig.set(this)
+            }
+        }
+    }
+
     companion object {
         const val JIRA_ATTACH_BUILD = "jiraAttachBuild"
         const val JIRA_COMMENT = "jiraComment"
         const val JIRA_UPLOAD = "jiraUpload"
         const val TELEGRAM_UPLOAD = "telegramUpload"
+        const val TELEGRAM_SEND_MESSAGE = "telegramSendMessage"
         const val SLACK_UPLOAD = "slackUpload"
         const val SLACK_COMMENT = "slackComment"
     }
