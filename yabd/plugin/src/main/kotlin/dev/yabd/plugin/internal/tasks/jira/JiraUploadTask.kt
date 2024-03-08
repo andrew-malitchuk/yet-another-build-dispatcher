@@ -5,7 +5,7 @@ import dev.yabd.plugin.internal.config.jira.JiraConfig
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
-import dev.yabd.plugin.internal.usecase.jira.JiraFileUploadUseCase
+import dev.yabd.plugin.internal.usecase.jira.JiraUploadUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
@@ -43,7 +43,7 @@ abstract class JiraUploadTask : DefaultTask() {
                     }
                 }
                 val response =
-                    JiraFileUploadUseCase(
+                    JiraUploadUseCase(
                         authorization = JiraAuthorization(email, token),
                         jiraCloudInstance = JiraCloudInstance(jiraCloudInstance),
                         ticket = JiraTicket(ticket),

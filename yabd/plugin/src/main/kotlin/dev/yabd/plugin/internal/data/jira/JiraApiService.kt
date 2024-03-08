@@ -3,7 +3,7 @@ package dev.yabd.plugin.internal.data.jira
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
-import dev.yabd.plugin.internal.usecase.jira.JiraFileUploadUseCase
+import dev.yabd.plugin.internal.usecase.jira.JiraUploadUseCase
 import org.http4k.core.Body
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method
@@ -63,13 +63,13 @@ object JiraApiService {
             ticket: JiraTicket,
         ): String {
             return "${
-                JiraFileUploadUseCase.BASE_URL.replace(
-                    "{${JiraFileUploadUseCase.Companion.Variables.JIRA_CLOUD_INSTANCE}}",
+                JiraUploadUseCase.BASE_URL.replace(
+                    "{${JiraUploadUseCase.Companion.Variables.JIRA_CLOUD_INSTANCE}}",
                     jiraCloudInstance.value ?: run { throw IllegalArgumentException("`jiraCloudInstance` is invalid") },
                 )
             }${
-                JiraFileUploadUseCase.PATH.replace(
-                    "{${JiraFileUploadUseCase.Companion.Variables.TICKET}}",
+                JiraUploadUseCase.PATH.replace(
+                    "{${JiraUploadUseCase.Companion.Variables.TICKET}}",
                     ticket.value ?: run { throw IllegalArgumentException("`ticket` is invalid") },
                 )
             }"

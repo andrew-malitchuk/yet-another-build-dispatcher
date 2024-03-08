@@ -4,14 +4,14 @@ import dev.yabd.plugin.internal.config.telegram.TelegramConfig
 import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
 import dev.yabd.plugin.internal.core.model.telegram.TelegramMessage
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
-import dev.yabd.plugin.internal.usecase.telegram.TelegramSendMessageUseCase
+import dev.yabd.plugin.internal.usecase.telegram.TelegramCommentUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
-abstract class TelegramSendMessageTask : DefaultTask() {
+abstract class TelegramCommentTask : DefaultTask() {
     init {
         group = "Telegram"
         description = "Telegram send message"
@@ -40,7 +40,7 @@ abstract class TelegramSendMessageTask : DefaultTask() {
                     lifecycle("telegram-config  |   message        : $message")
                 }
             }
-            TelegramSendMessageUseCase(
+            TelegramCommentUseCase(
                 chatId = TelegramChatId(chatId),
                 token = TelegramToken(token),
                 message = TelegramMessage(message),

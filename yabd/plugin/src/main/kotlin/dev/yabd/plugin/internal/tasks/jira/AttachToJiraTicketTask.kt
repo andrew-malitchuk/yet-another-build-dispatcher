@@ -5,14 +5,14 @@ import dev.yabd.plugin.internal.config.jira.JiraAttachBuildConfig
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
-import dev.yabd.plugin.internal.usecase.jira.JiraAttachBuildLinkInCommentScenario
+import dev.yabd.plugin.internal.usecase.jira.AttachToJiraTicketScenario
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
-abstract class JiraAttachBuildTask : DefaultTask() {
+abstract class AttachToJiraTicketTask : DefaultTask() {
     init {
         group = "Jira"
         description = "Jira file uploader & comment attach"
@@ -44,7 +44,7 @@ abstract class JiraAttachBuildTask : DefaultTask() {
                 }
             }
             val jiraAttachBuildLinkInCommentResponse =
-                JiraAttachBuildLinkInCommentScenario(
+                AttachToJiraTicketScenario(
                     authorization = JiraAuthorization(email, token),
                     jiraCloudInstance = JiraCloudInstance(jiraCloudInstance),
                     ticket = JiraTicket(ticket),

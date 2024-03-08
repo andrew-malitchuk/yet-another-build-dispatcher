@@ -19,25 +19,19 @@ import org.http4k.core.MultipartFormBody
  *
  * [API documentation] (https://core.telegram.org/bots/api#senddocument)
  */
-class TelegramSendMessageUseCase(
+class TelegramCommentUseCase(
     private val chatId: TelegramChatId,
     private val token: TelegramToken,
     private val message: TelegramMessage,
 ) : UseCase() {
     override operator fun invoke(): TelegramResponseNetModel? {
-        val body =
-            MultipartFormBody()
-                .plus(
-                    "text" to "${message.value}",
-                )
-
+        val body = MultipartFormBody().plus("text" to "${message.value}")
         val response = ApacheClient().sendMessage(chatId, token, body)
-
         return if (response.status.successful) {
             response.toTelegramResponseNetModel()
         } else {
             throw GradleException(
-                "TelegramUploader |   failed to upload build: " +
+                "${this::class.java}    |   failed to upload build: " +
                     "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }

@@ -11,7 +11,7 @@ import org.gradle.api.GradleException
 
 // TODO: add some wrapper over jira configs
 @Suppress("LongParameterList", "ForbiddenComment")
-class JiraAttachBuildLinkInCommentScenario(
+class AttachToJiraTicketScenario(
     private val authorization: JiraAuthorization,
     private val jiraCloudInstance: JiraCloudInstance,
     private val ticket: JiraTicket,
@@ -26,20 +26,18 @@ class JiraAttachBuildLinkInCommentScenario(
             "`comment` is invalid; please, check it"
         }
 
-        val jiraFileUploadUseCase =
-            JiraFileUploadUseCase(
+        val jiraUploadUseCase =
+            JiraUploadUseCase(
                 authorization = authorization,
                 jiraCloudInstance = jiraCloudInstance,
                 ticket = ticket,
                 artifactPath = artifactPath,
                 artifactName = artifactName,
             )
-
-        val jiraFileUploadResponse = jiraFileUploadUseCase()
-
+        val jiraFileUploadResponse = jiraUploadUseCase()
         if (jiraFileUploadResponse != null) {
-            val jiraLeaveCommentUseCase =
-                JiraLeaveCommentUseCase(
+            val jiraCommentUseCase =
+                JiraCommentUseCase(
                     authorization = authorization,
                     jiraCloudInstance = jiraCloudInstance,
                     ticket = ticket,
@@ -49,7 +47,7 @@ class JiraAttachBuildLinkInCommentScenario(
                             jiraFileUpload = jiraFileUploadResponse,
                         ),
                 )
-            return jiraLeaveCommentUseCase()
+            return jiraCommentUseCase()
         } else {
             throw GradleException("Failed to upload a build")
         }

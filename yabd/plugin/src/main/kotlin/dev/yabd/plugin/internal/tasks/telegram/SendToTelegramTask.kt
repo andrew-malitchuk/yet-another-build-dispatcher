@@ -5,14 +5,14 @@ import dev.yabd.plugin.internal.config.telegram.TelegramConfig
 import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.core.utils.TelegramUtils.getDownloadLink
-import dev.yabd.plugin.internal.usecase.telegram.TelegramFileUploadUseCase
+import dev.yabd.plugin.internal.usecase.telegram.SendToTelegramUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
-abstract class TelegramUploadTask : DefaultTask() {
+abstract class SendToTelegramTask : DefaultTask() {
     init {
         group = "Telegram"
         description = "Telegram file uploader"
@@ -42,7 +42,7 @@ abstract class TelegramUploadTask : DefaultTask() {
                 }
             }
             val response =
-                TelegramFileUploadUseCase(
+                SendToTelegramUseCase(
                     chatId = TelegramChatId(chatId),
                     token = TelegramToken(token),
                     artifactPath = artifactPath,

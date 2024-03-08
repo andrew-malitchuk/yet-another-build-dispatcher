@@ -12,7 +12,7 @@ import dev.yabd.plugin.internal.usecase.base.UseCase
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 
-class SlackLeaveCommentUseCase(
+class SlackCommentUseCase(
     private val token: SlackToken,
     private val channel: SlackChannel,
     private val comment: SlackMessage,
@@ -27,7 +27,7 @@ class SlackLeaveCommentUseCase(
             response.toSlackResponseNetModel()
         } else {
             throw GradleException(
-                "SlackLeaveCommentUseCase |   failed to upload build: " +
+                "${this::class.java}    |   failed to upload build: " +
                     "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }

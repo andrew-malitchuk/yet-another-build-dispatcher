@@ -4,14 +4,14 @@ import dev.yabd.plugin.internal.config.jira.JiraCommentConfig
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
-import dev.yabd.plugin.internal.usecase.jira.JiraLeaveCommentUseCase
+import dev.yabd.plugin.internal.usecase.jira.JiraCommentUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
-abstract class JiraAttachCommentTask : DefaultTask() {
+abstract class JiraCommentTask : DefaultTask() {
     init {
         group = "Jira"
         description = "Jira file uploader & comment attach"
@@ -38,7 +38,7 @@ abstract class JiraAttachCommentTask : DefaultTask() {
                 }
             }
             val jiraCommentResponse =
-                JiraLeaveCommentUseCase(
+                JiraCommentUseCase(
                     authorization = JiraAuthorization(email, token),
                     jiraCloudInstance = JiraCloudInstance(jiraCloudInstance),
                     ticket = JiraTicket(ticket),

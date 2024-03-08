@@ -19,7 +19,7 @@ import java.io.File
 /**
  * https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-attachments/#api-group-issue-attachments
  */
-class JiraFileUploadUseCase(
+class JiraUploadUseCase(
     private val authorization: JiraAuthorization,
     private val jiraCloudInstance: JiraCloudInstance,
     private val ticket: JiraTicket,
