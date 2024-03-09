@@ -1,6 +1,6 @@
 package dev.yabd.plugin.internal.data.telegram
 
-import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChat
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.data.telegram.TelegramApiService.Url.BASE_URL
 import dev.yabd.plugin.internal.data.telegram.TelegramApiService.Url.SEND_MESSAGE
@@ -14,7 +14,7 @@ import org.http4k.core.Response
 object TelegramApiService {
     // TODO: response?
     fun HttpHandler.uploadFile(
-        chatId: TelegramChatId,
+        chatId: TelegramChat,
         authorization: TelegramToken,
         body: MultipartFormBody,
     ): Response {
@@ -39,7 +39,7 @@ object TelegramApiService {
     }
 
     fun HttpHandler.sendMessage(
-        chatId: TelegramChatId,
+        chatId: TelegramChat,
         authorization: TelegramToken,
         body: MultipartFormBody,
     ): Response {

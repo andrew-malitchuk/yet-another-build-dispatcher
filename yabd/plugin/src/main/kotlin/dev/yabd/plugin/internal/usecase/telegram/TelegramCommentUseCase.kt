@@ -1,6 +1,6 @@
 package dev.yabd.plugin.internal.usecase.telegram
 
-import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChat
 import dev.yabd.plugin.internal.core.model.telegram.TelegramMessage
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.data.telegram.TelegramApiService.sendMessage
@@ -20,7 +20,7 @@ import org.http4k.core.MultipartFormBody
  * [API documentation] (https://core.telegram.org/bots/api#senddocument)
  */
 class TelegramCommentUseCase(
-    private val chatId: TelegramChatId,
+    private val chatId: TelegramChat,
     private val token: TelegramToken,
     private val message: TelegramMessage,
 ) : UseCase() {

@@ -1,7 +1,7 @@
 package dev.yabd.plugin.internal.tasks.telegram
 
 import dev.yabd.plugin.internal.config.telegram.TelegramConfig
-import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChat
 import dev.yabd.plugin.internal.core.model.telegram.TelegramMessage
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.usecase.telegram.TelegramCommentUseCase
@@ -41,7 +41,7 @@ abstract class TelegramCommentTask : DefaultTask() {
                 }
             }
             TelegramCommentUseCase(
-                chatId = TelegramChatId(chatId),
+                chatId = TelegramChat(chatId),
                 token = TelegramToken(token),
                 message = TelegramMessage(message),
             ).invoke()

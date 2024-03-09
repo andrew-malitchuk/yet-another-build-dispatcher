@@ -2,7 +2,7 @@ package dev.yabd.plugin.internal.tasks.telegram
 
 import dev.yabd.plugin.common.core.file.ArtifactPathFinder.defaultArtifactResolveStrategy
 import dev.yabd.plugin.internal.config.telegram.TelegramConfig
-import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChat
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.core.utils.TelegramUtils.getDownloadLink
 import dev.yabd.plugin.internal.usecase.telegram.SendToTelegramUseCase
@@ -43,7 +43,7 @@ abstract class SendToTelegramTask : DefaultTask() {
             }
             val response =
                 SendToTelegramUseCase(
-                    chatId = TelegramChatId(chatId),
+                    chatId = TelegramChat(chatId),
                     token = TelegramToken(token),
                     artifactPath = artifactPath,
                     artifactName = artifactName,

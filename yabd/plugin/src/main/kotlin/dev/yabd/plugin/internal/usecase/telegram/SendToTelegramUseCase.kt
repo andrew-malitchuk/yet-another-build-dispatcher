@@ -2,7 +2,7 @@ package dev.yabd.plugin.internal.usecase.telegram
 
 import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
-import dev.yabd.plugin.internal.core.model.telegram.TelegramChatId
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChat
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
 import dev.yabd.plugin.internal.data.telegram.TelegramApiService.Url.Variables.DOCUMENT
 import dev.yabd.plugin.internal.data.telegram.TelegramApiService.uploadFile
@@ -25,7 +25,7 @@ import java.io.File
  * [API documentation] (https://core.telegram.org/bots/api#senddocument)
  */
 class SendToTelegramUseCase(
-    private val chatId: TelegramChatId,
+    private val chatId: TelegramChat,
     private val token: TelegramToken,
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
