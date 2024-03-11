@@ -3,7 +3,7 @@ package dev.yabd.plugin.internal.data.jira.model.response
 import com.google.gson.annotations.SerializedName
 import dev.yabd.plugin.common.model.base.NetModel
 
-data class AvatarUrlsNetModel(
+data class AvatarUrlsResponseNetModel(
     @SerializedName("16x16")
     val x16: String?,
     @SerializedName("24x24")

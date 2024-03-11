@@ -1,11 +1,11 @@
-package dev.yabd.plugin.internal.data.jira.model.request
+package dev.yabd.plugin.internal.data.slack.model.request
 
 import com.google.gson.annotations.SerializedName
 import dev.yabd.plugin.common.model.base.NetModel
 
-data class ContentNetModel(
-    @SerializedName("content")
-    val content: List<ContentCommentNetModel>?,
+data class BlockCommentRequestNetModel(
+    @SerializedName("text")
+    val text: TextRequestNetModel?,
     @SerializedName("type")
     val type: String?,
 ) : NetModel

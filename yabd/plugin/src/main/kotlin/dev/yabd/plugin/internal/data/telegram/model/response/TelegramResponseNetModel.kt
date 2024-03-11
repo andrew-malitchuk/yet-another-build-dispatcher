@@ -10,7 +10,7 @@ data class TelegramResponseNetModel(
     @SerializedName("ok")
     val ok: Boolean?,
     @SerializedName("result")
-    val telegramResultNetModel: TelegramResultNetModel?,
+    val telegramResultNetModel: TelegramResultResponseNetModel?,
 ) : NetModel {
     companion object {
         @Suppress("SwallowedException")

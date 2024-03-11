@@ -4,11 +4,13 @@ import com.android.build.gradle.api.ApplicationVariant
 import com.android.build.gradle.internal.plugins.AppPlugin
 import dev.yabd.plugin.common.core.ext.capitalize
 import dev.yabd.plugin.internal.YabdExtension.Companion.yabdConfig
-import dev.yabd.plugin.internal.tasks.jira.JiraAttachBuildTask
-import dev.yabd.plugin.internal.tasks.jira.JiraAttachCommentTask
+import dev.yabd.plugin.internal.tasks.jira.AttachToJiraTicketTask
+import dev.yabd.plugin.internal.tasks.jira.JiraCommentTask
 import dev.yabd.plugin.internal.tasks.jira.JiraUploadTask
-import dev.yabd.plugin.internal.tasks.slack.SlackUploadTask
-import dev.yabd.plugin.internal.tasks.telegram.TelegramUploadTask
+import dev.yabd.plugin.internal.tasks.slack.ShareOnSlackTask
+import dev.yabd.plugin.internal.tasks.slack.SlackCommentTask
+import dev.yabd.plugin.internal.tasks.telegram.SendToTelegramTask
+import dev.yabd.plugin.internal.tasks.telegram.TelegramCommentTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskContainer
@@ -24,63 +26,49 @@ class YabdPlugin : Plugin<Project> {
 
                 androidExtension.applicationVariants.all { variant ->
                     project.tasks.apply {
-                        configureTelegramUpload(variant, yabd)
+                        configureSendToTelegramTask(variant, yabd)
+                        configureTelegramCommentTask(variant, yabd)
                         configureJiraUpload(variant, yabd)
                         configureJiraComment(variant, yabd)
-                        configureJiraAttackBuild(variant, yabd)
-                        configureSlackUpload(variant, yabd)
+                        configureAttachToJiraTicketTask(variant, yabd)
+                        configureShareOnSlack(variant, yabd)
+                        configureSlackComment(variant, yabd)
                     }
                 }
             }
         }
     }
 
-    private fun TaskContainer.configureSlackUpload(
+    private fun TaskContainer.configureSendToTelegramTask(
         variant: ApplicationVariant,
         yabd: YabdExtension,
     ) {
         register(
-            "$SLACK_UPLOAD${variant.name.capitalize()}",
-            SlackUploadTask::class.java,
+            "$SEND_TO_TELEGRAM_TASK${variant.name.capitalize()}",
+            SendToTelegramTask::class.java,
         ) {
-            yabd.slackConfig.apply {
+            yabd.telegram.apply {
                 tag = variant.name
-                it.group = "slackUpload"
-                it.description = "Task for ${variant.name} variant"
-                it.slackConfig.set(this)
+                it.group = "Telegram"
+                it.description = "$SEND_TO_TELEGRAM_TASK    |   ${variant.name}"
+                it.telegramConfig.set(this)
             }
         }
     }
 
-    private fun TaskContainer.configureJiraAttackBuild(
+    private fun TaskContainer.configureTelegramCommentTask(
         variant: ApplicationVariant,
         yabd: YabdExtension,
     ) {
         register(
-            "$JIRA_ATTACH_BUILD${variant.name.capitalize()}",
-            JiraAttachBuildTask::class.java,
+            "$TELEGRAM_COMMENT_TASK${variant.name.capitalize()}",
+            TelegramCommentTask::class.java,
         ) {
-            yabd.jiraAttachBuildConfig.apply {
+            yabd.telegram.apply {
                 tag = variant.name
-                it.group = "jiraUpload"
-                it.description = "Task for ${variant.name} variant"
-                it.jiraAttachBuildConfig.set(this)
-            }
-        }
-    }
-
-    private fun TaskContainer.configureJiraComment(
-        variant: ApplicationVariant,
-        yabd: YabdExtension,
-    ) {
-        register(
-            "$JIRA_COMMENT${variant.name.capitalize()}",
-            JiraAttachCommentTask::class.java,
-        ) {
-            yabd.jiraCommentConfig.apply {
-                it.group = "jiraUpload"
-                it.description = "Task for ${variant.name} variant"
-                it.jiraCommentConfig.set(this)
+                it.group = "Telegram"
+                it.description = "$TELEGRAM_COMMENT_TASK    |   ${variant.name}"
+                it.telegramConfig.set(this)
             }
         }
     }
@@ -95,35 +83,89 @@ class YabdPlugin : Plugin<Project> {
         ) {
             yabd.jira.apply {
                 tag = variant.name
-                it.group = "jiraUpload"
-                it.description = "Task for ${variant.name} variant"
+                it.group = "Jira"
+                it.description = "$JIRA_UPLOAD  |   ${variant.name}"
                 it.jiraConfig.set(this)
             }
         }
     }
 
-    private fun TaskContainer.configureTelegramUpload(
+    private fun TaskContainer.configureJiraComment(
         variant: ApplicationVariant,
         yabd: YabdExtension,
     ) {
         register(
-            "$TELEGRAM_UPLOAD${variant.name.capitalize()}",
-            TelegramUploadTask::class.java,
+            "$JIRA_COMMENT${variant.name.capitalize()}",
+            JiraCommentTask::class.java,
         ) {
-            yabd.telegram.apply {
+            yabd.jiraCommentConfig.apply {
+                it.group = "Jira"
+                it.description = "$JIRA_COMMENT |   ${variant.name}"
+                it.jiraCommentConfig.set(this)
+            }
+        }
+    }
+
+    private fun TaskContainer.configureAttachToJiraTicketTask(
+        variant: ApplicationVariant,
+        yabd: YabdExtension,
+    ) {
+        register(
+            "$ATTACH_TO_JIRA_TICKET${variant.name.capitalize()}",
+            AttachToJiraTicketTask::class.java,
+        ) {
+            yabd.jiraAttachBuildConfig.apply {
                 tag = variant.name
-                it.group = "telegramUpload"
-                it.description = "Task for ${variant.name} variant"
-                it.telegramConfig.set(this)
+                it.group = "Jira"
+                it.description = "$ATTACH_TO_JIRA_TICKET    |   ${variant.name}"
+                it.jiraAttachBuildConfig.set(this)
+            }
+        }
+    }
+
+    private fun TaskContainer.configureSlackComment(
+        variant: ApplicationVariant,
+        yabd: YabdExtension,
+    ) {
+        register(
+            "$SLACK_COMMENT${variant.name.capitalize()}",
+            SlackCommentTask::class.java,
+        ) {
+            yabd.slackConfig.apply {
+                tag = variant.name
+                it.group = "Slack"
+                it.description = "$SLACK_COMMENT    |   ${variant.name}"
+                it.slackConfig.set(this)
+            }
+        }
+    }
+
+    private fun TaskContainer.configureShareOnSlack(
+        variant: ApplicationVariant,
+        yabd: YabdExtension,
+    ) {
+        register(
+            "$SHARE_ON_SLACK${variant.name.capitalize()}",
+            ShareOnSlackTask::class.java,
+        ) {
+            yabd.slackConfig.apply {
+                tag = variant.name
+                it.group = "Slack"
+                it.description = "$SHARE_ON_SLACK   |   ${variant.name}"
+                it.slackConfig.set(this)
             }
         }
     }
 
     companion object {
-        const val JIRA_ATTACH_BUILD = "jiraAttachBuild"
-        const val JIRA_COMMENT = "jiraComment"
+        const val SEND_TO_TELEGRAM_TASK = "sendToTelegramTask"
+        const val TELEGRAM_COMMENT_TASK = "telegramCommentTask"
+
         const val JIRA_UPLOAD = "jiraUpload"
-        const val TELEGRAM_UPLOAD = "telegramUpload"
-        const val SLACK_UPLOAD = "slackUpload"
+        const val JIRA_COMMENT = "jiraComment"
+        const val ATTACH_TO_JIRA_TICKET = "attachToJiraTicket"
+
+        const val SLACK_COMMENT = "slackComment"
+        const val SHARE_ON_SLACK = "shareOnSlack"
     }
 }

@@ -15,7 +15,7 @@ import org.http4k.client.ApacheClient
 /**
  * https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-comments/#api-rest-api-3-issue-issueidorkey-comment-post
  */
-class JiraLeaveCommentUseCase(
+class JiraCommentUseCase(
     private val authorization: JiraAuthorization,
     private val jiraCloudInstance: JiraCloudInstance,
     private val ticket: JiraTicket,

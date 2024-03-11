@@ -1,12 +1,13 @@
-package dev.yabd.plugin.internal.usecase.slack
+package dev.yabd.plugin.internal.usecase.telegram
 
 import dev.yabd.plugin.common.core.ext.containsExtension
 import dev.yabd.plugin.common.model.ArtifactPath
-import dev.yabd.plugin.internal.core.model.slack.SlackChannel
-import dev.yabd.plugin.internal.core.model.slack.SlackToken
-import dev.yabd.plugin.internal.data.slack.SlackApiService.foo
-import dev.yabd.plugin.internal.data.slack.model.response.SlackResponseNetModel
-import dev.yabd.plugin.internal.data.slack.model.response.SlackResponseNetModel.Companion.toSlackResponseNetModel
+import dev.yabd.plugin.internal.core.model.telegram.TelegramChat
+import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
+import dev.yabd.plugin.internal.data.telegram.TelegramApiService.Url.Variables.DOCUMENT
+import dev.yabd.plugin.internal.data.telegram.TelegramApiService.uploadFile
+import dev.yabd.plugin.internal.data.telegram.model.response.TelegramResponseNetModel
+import dev.yabd.plugin.internal.data.telegram.model.response.TelegramResponseNetModel.Companion.toTelegramResponseNetModel
 import dev.yabd.plugin.internal.usecase.base.UseCase
 import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
@@ -15,13 +16,21 @@ import org.http4k.core.MultipartFormBody
 import org.http4k.lens.MultipartFormFile
 import java.io.File
 
-class SlackFileUploadUseCase(
-    private val token: SlackToken,
-    private val channel: SlackChannel,
+/**
+ *
+ * @param chatId
+ * @param token
+ * @param artifactPath
+ *
+ * [API documentation] (https://core.telegram.org/bots/api#senddocument)
+ */
+class SendToTelegramUseCase(
+    private val chatId: TelegramChat,
+    private val token: TelegramToken,
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
-    override fun invoke(): SlackResponseNetModel? {
+    override operator fun invoke(): TelegramResponseNetModel? {
         var file = File(artifactPath.value)
 
         if (!artifactName.isNullOrBlank()) {
@@ -35,26 +44,21 @@ class SlackFileUploadUseCase(
         val body =
             MultipartFormBody()
                 .plus(
-                    "file" to
+                    DOCUMENT to
                         MultipartFormFile(
                             file.name,
                             ContentType.OCTET_STREAM,
                             file.inputStream(),
                         ),
                 )
-                .plus(
-                    "initial_comment" to "foobar",
-                )
-                .plus(
-                    "channels" to "${channel.value}",
-                )
-        val response = ApacheClient().foo(token, body)
+
+        val response = ApacheClient().uploadFile(chatId, token, body)
 
         return if (response.status.successful) {
-            response.toSlackResponseNetModel()
+            response.toTelegramResponseNetModel()
         } else {
             throw GradleException(
-                "SlackUploader |   failed to upload build: " +
+                "${this::class.java}    |   failed to upload build: " +
                     "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }

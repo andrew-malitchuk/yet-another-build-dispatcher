@@ -5,7 +5,7 @@ import dev.yabd.plugin.common.model.base.NetModel
 
 data class JiraFileUploadResponseNetModelItem(
     @SerializedName("author")
-    val author: AuthorNetModel?,
+    val author: AuthorResponseNetModel?,
     @SerializedName("content")
     val content: String?,
     @SerializedName("created")
