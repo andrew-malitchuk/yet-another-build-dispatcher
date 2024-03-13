@@ -15,7 +15,13 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.TaskContainer
 
+/**
+ * A Gradle plugin for configuring tasks
+ */
 class YabdPlugin : Plugin<Project> {
+    /**
+     * Applies the Yabd plugin to the project.
+     */
     @Suppress("LongMethod")
     override fun apply(project: Project) {
         with(project) {
