@@ -13,7 +13,12 @@ import org.gradle.api.GradleException
 import org.http4k.client.ApacheClient
 
 /**
- * https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-comments/#api-rest-api-3-issue-issueidorkey-comment-post
+ * Use case for leaving a comment on a Jira ticket.
+ *
+ * @param authorization The authorization details for accessing Jira.
+ * @param jiraCloudInstance The Jira cloud instance to which the ticket belongs.
+ * @param ticket The Jira ticket on which the comment will be left.
+ * @param comment The comment to be left on the Jira ticket.
  */
 class JiraCommentUseCase(
     private val authorization: JiraAuthorization,
@@ -21,6 +26,12 @@ class JiraCommentUseCase(
     private val ticket: JiraTicket,
     private val comment: String?,
 ) : UseCase() {
+
+    /**
+     * Executes the use case to leave a comment on the specified Jira ticket.
+     *
+     * @return The response model containing the comment information if successful, otherwise null.
+     */
     override fun invoke(): JiraCommentResponseNetModel? {
         require(!comment.isNullOrBlank()) {
             "`comment` is invalid; please, check it"
@@ -30,19 +41,18 @@ class JiraCommentUseCase(
         require(body != null) {
             "failed to generate `body`"
         }
-        val response =
-            ApacheClient().leaveComment(
-                jiraCloudInstance,
-                ticket,
-                authorization,
-                body,
-            )
+        val response = ApacheClient().leaveComment(
+            jiraCloudInstance,
+            ticket,
+            authorization,
+            body,
+        )
         return if (response.status.successful) {
             response.toJiraCommentResponseNetModel()
         } else {
             throw GradleException(
                 "JiraUploader |   failed to upload build: " +
-                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }

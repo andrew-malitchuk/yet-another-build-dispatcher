@@ -17,7 +17,13 @@ import org.http4k.lens.MultipartFormFile
 import java.io.File
 
 /**
- * https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-attachments/#api-group-issue-attachments
+ * Use case for uploading a file to a Jira ticket as an attachment.
+ *
+ * @param authorization The authorization details for accessing Jira.
+ * @param jiraCloudInstance The Jira cloud instance to which the ticket belongs.
+ * @param ticket The Jira ticket to which the file will be attached.
+ * @param artifactPath The path to the artifact file to be uploaded.
+ * @param artifactName The custom name for the uploaded artifact.
  */
 class JiraUploadUseCase(
     private val authorization: JiraAuthorization,
@@ -26,11 +32,16 @@ class JiraUploadUseCase(
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
-    @Suppress("ForbiddenComment")
+
+    /**
+     * Executes the use case to upload a file to the specified Jira ticket as an attachment.
+     *
+     * @return The response model containing the upload information if successful, otherwise null.
+     */
     override fun invoke(): JiraFileUploadResponseNetModel? {
         var file = File(artifactPath.value)
 
-        // TODO: recode
+        // Rename the file if a custom name is provided and the file extension is "apk"
         if (!artifactName.isNullOrBlank()) {
             if (artifactName.containsExtension("apk")) {
                 val newFile = File(file.parentFile.path + "/$artifactName")
@@ -39,31 +50,30 @@ class JiraUploadUseCase(
             }
         }
 
-        // TODO: recode
-        val body =
-            MultipartFormBody()
-                .plus(
-                    Variables.FILE to
-                        MultipartFormFile(
-                            file.name,
-                            ContentType.OCTET_STREAM,
-                            file.inputStream(),
-                        ),
-                )
-
-        val response =
-            ApacheClient().uploadFile(
-                jiraCloudInstance,
-                ticket,
-                authorization,
-                body,
+        // Create a multipart form body with the file
+        val body = MultipartFormBody().plus(
+            Variables.FILE to MultipartFormFile(
+                file.name,
+                ContentType.OCTET_STREAM,
+                file.inputStream(),
             )
+        )
+
+        // Upload the file to the Jira ticket
+        val response = ApacheClient().uploadFile(
+            jiraCloudInstance,
+            ticket,
+            authorization,
+            body,
+        )
+
+        // Check if the upload was successful and return the response model
         return if (response.status.successful) {
             response.toJiraFileUploadResponseNetModel()
         } else {
             throw GradleException(
                 "JiraUploader |   failed to upload build: " +
-                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }
@@ -75,7 +85,9 @@ class JiraUploadUseCase(
             const val FILE = "file"
         }
 
+        // Base URL for the Jira API
         const val BASE_URL = "https://{${Variables.JIRA_CLOUD_INSTANCE}}"
+        // Path for uploading file attachments to a Jira ticket
         const val PATH = "/rest/api/3/issue/{${Variables.TICKET}}/attachments"
     }
 }

@@ -17,12 +17,14 @@ import org.http4k.lens.MultipartFormFile
 import java.io.File
 
 /**
+ * Use case for sending a file to a Telegram chat.
  *
- * @param chatId
- * @param token
- * @param artifactPath
+ * @param chatId The Telegram chat ID to which the file will be sent.
+ * @param token The Telegram bot token for authentication.
+ * @param artifactPath The path to the file to be sent.
+ * @param artifactName The name of the file to be sent.
  *
- * [API documentation] (https://core.telegram.org/bots/api#senddocument)
+ * [API documentation](https://core.telegram.org/bots/api#senddocument)
  */
 class SendToTelegramUseCase(
     private val chatId: TelegramChat,
@@ -30,9 +32,17 @@ class SendToTelegramUseCase(
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
-    override operator fun invoke(): TelegramResponseNetModel? {
+
+    /**
+     * Executes the use case to send a file to a Telegram chat.
+     *
+     * @return The response model containing the sending information if successful, otherwise null.
+     */
+    override fun invoke(): TelegramResponseNetModel? {
+        // Prepare the file to be sent
         var file = File(artifactPath.value)
 
+        // Rename the file if a new name is provided and it has an "apk" extension
         if (!artifactName.isNullOrBlank()) {
             if (artifactName.containsExtension("apk")) {
                 val newFile = File(file.parentFile.path + "/$artifactName")
@@ -41,25 +51,28 @@ class SendToTelegramUseCase(
             }
         }
 
+        // Create the request body with the file
         val body =
             MultipartFormBody()
                 .plus(
                     DOCUMENT to
-                        MultipartFormFile(
-                            file.name,
-                            ContentType.OCTET_STREAM,
-                            file.inputStream(),
-                        ),
+                            MultipartFormFile(
+                                file.name,
+                                ContentType.OCTET_STREAM,
+                                file.inputStream(),
+                            ),
                 )
 
+        // Send the file to the Telegram chat
         val response = ApacheClient().uploadFile(chatId, token, body)
 
+        // Check if the file sending was successful and return the response model
         return if (response.status.successful) {
             response.toTelegramResponseNetModel()
         } else {
             throw GradleException(
                 "${this::class.java}    |   failed to upload build: " +
-                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }
