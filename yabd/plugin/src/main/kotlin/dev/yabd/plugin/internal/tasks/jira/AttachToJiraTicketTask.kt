@@ -12,19 +12,32 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
+/**
+ * Task for attaching files to a Jira ticket and adding comments.
+ */
 abstract class AttachToJiraTicketTask : DefaultTask() {
+
     init {
         group = "Jira"
         description = "Jira file uploader & comment attach"
     }
 
+    /**
+     * Configuration for attaching files to a Jira ticket.
+     */
     @get:Input
     abstract val jiraAttachBuildConfig: Property<JiraAttachBuildConfig>
 
+    /**
+     * Boolean option to enable debug output.
+     */
     @Option(description = DEBUG_DESCRIPTION, option = DEBUG_OUTPUT)
     @get:Input
     var debugOutput: Boolean = false
 
+    /**
+     * Action method for the task.
+     */
     @Suppress("NestedBlockDepth")
     @TaskAction
     fun action() {
@@ -32,14 +45,14 @@ abstract class AttachToJiraTicketTask : DefaultTask() {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
             if (debugOutput) {
                 logger.apply {
-                    lifecycle("jira-attach-build  |   email                         : $email")
-                    lifecycle("jira-attach-build  |   jiraCloudInstance             : $jiraCloudInstance")
-                    lifecycle("jira-attach-build  |   token                         : $token")
-                    lifecycle("jira-attach-build  |   ticket                        : $ticket")
-                    lifecycle("jira-attach-build  |   comment                       : $comment")
-                    lifecycle("jira-attach-build  |   filePath                      : ${artifactPath.value}")
+                    lifecycle("attach-to-jira-ticket    |   email               : $email")
+                    lifecycle("attach-to-jira-ticket    |   jiraCloudInstance   : $jiraCloudInstance")
+                    lifecycle("attach-to-jira-ticket    |   token               : $token")
+                    lifecycle("attach-to-jira-ticket    |   ticket              : $ticket")
+                    lifecycle("attach-to-jira-ticket    |   comment             : $comment")
+                    lifecycle("attach-to-jira-ticket    |   filePath            : ${artifactPath.value}")
                     artifactName?.let {
-                        lifecycle("jira-attach-build  |   artifactName                  : $artifactName")
+                        lifecycle("attach-to-jira-ticket    |   artifactName        : $artifactName")
                     }
                 }
             }
@@ -55,7 +68,7 @@ abstract class AttachToJiraTicketTask : DefaultTask() {
             if (debugOutput) {
                 logger.apply {
                     jiraAttachBuildLinkInCommentResponse?.let {
-                        lifecycle("jira-attach-build  |   link                          : ${it.self}}")
+                        lifecycle("attach-to-jira-ticket    |   link               : ${it.self}}")
                     }
                 }
             }

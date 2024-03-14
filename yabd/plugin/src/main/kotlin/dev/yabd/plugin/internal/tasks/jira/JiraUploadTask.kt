@@ -32,14 +32,14 @@ abstract class JiraUploadTask : DefaultTask() {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
             if (debugOutput) {
                 logger.apply {
-                    lifecycle("jira-config  |   buildVariant                : $tag")
-                    lifecycle("jira-config  |   email                       : $email")
-                    lifecycle("jira-config  |   jiraCloudInstance           : $jiraCloudInstance")
-                    lifecycle("jira-config  |   token                       : $token")
-                    lifecycle("jira-config  |   ticket                      : $ticket")
-                    lifecycle("jira-config  |   filePath                    : ${artifactPath.value}")
+                    lifecycle("jira-upload  |   buildVariant                : $tag")
+                    lifecycle("jira-upload  |   email                       : $email")
+                    lifecycle("jira-upload  |   jiraCloudInstance           : $jiraCloudInstance")
+                    lifecycle("jira-upload  |   token                       : $token")
+                    lifecycle("jira-upload  |   ticket                      : $ticket")
+                    lifecycle("jira-upload  |   filePath                    : ${artifactPath.value}")
                     artifactName?.let {
-                        lifecycle("jira-config  |   artifactName                : $artifactName")
+                        lifecycle("jira-upload  |   artifactName                : $artifactName")
                     }
                 }
                 val response =
@@ -53,7 +53,7 @@ abstract class JiraUploadTask : DefaultTask() {
                 if (debugOutput) {
                     logger.apply {
                         response?.let {
-                            lifecycle("jira-config  |   link                        : ${it.firstOrNull()?.content}")
+                            lifecycle("jira-upload  |   link                        : ${it.firstOrNull()?.content}")
                         }
                     }
                 }

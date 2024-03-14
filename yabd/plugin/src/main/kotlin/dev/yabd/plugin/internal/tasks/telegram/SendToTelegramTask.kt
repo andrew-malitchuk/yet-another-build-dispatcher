@@ -12,19 +12,32 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
+/**
+ * Task for uploading files to Telegram.
+ */
 abstract class SendToTelegramTask : DefaultTask() {
+
     init {
         group = "Telegram"
         description = "Telegram file uploader"
     }
 
+    /**
+     * Configuration for sending files to Telegram.
+     */
     @get:Input
     abstract val telegramConfig: Property<TelegramConfig>
 
+    /**
+     * Boolean option to enable debug output.
+     */
     @Option(description = DEBUG_DESCRIPTION, option = DEBUG_OUTPUT)
     @get:Input
     var debugOutput: Boolean = false
 
+    /**
+     * Action method for the task.
+     */
     @Suppress("NestedBlockDepth")
     @TaskAction
     fun action() {
@@ -32,12 +45,12 @@ abstract class SendToTelegramTask : DefaultTask() {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
             if (debugOutput) {
                 logger.apply {
-                    lifecycle("telegram-config  |   buildVariant    : $tag")
-                    lifecycle("telegram-config  |   chatId          : $chatId")
-                    lifecycle("telegram-config  |   token           : $token")
-                    lifecycle("telegram-config  |   filePath        : ${artifactPath.value}")
+                    lifecycle("send-to-telegram  |  buildVariant  : $tag")
+                    lifecycle("send-to-telegram  |  chatId        : $chatId")
+                    lifecycle("send-to-telegram  |  token         : $token")
+                    lifecycle("send-to-telegram  |  filePath      : ${artifactPath.value}")
                     artifactName?.let {
-                        lifecycle("telegram-config  |   artifactName    : $artifactName")
+                        lifecycle("send-to-telegram  |  artifactName  : $artifactName")
                     }
                 }
             }
@@ -51,7 +64,7 @@ abstract class SendToTelegramTask : DefaultTask() {
             if (debugOutput) {
                 logger.apply {
                     response?.let {
-                        lifecycle("telegram-config  |   link            : ${getDownloadLink(it)}")
+                        lifecycle("send-to-telegram  |  link          : ${getDownloadLink(it)}")
                     }
                 }
             }

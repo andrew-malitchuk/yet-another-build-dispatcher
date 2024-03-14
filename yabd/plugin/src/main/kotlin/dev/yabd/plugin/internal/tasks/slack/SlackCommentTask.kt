@@ -11,42 +11,58 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
+/**
+ * Task for commenting on Slack messages.
+ */
 abstract class SlackCommentTask : DefaultTask() {
+
     init {
         group = "Slack"
         description = "Slack message comment"
     }
 
+    /**
+     * Configuration for commenting on Slack messages.
+     */
     @get:Input
     abstract val slackConfig: Property<SlackConfig>
 
+    /**
+     * Boolean option to enable debug output.
+     */
     @Option(description = DEBUG_DESCRIPTION, option = DEBUG_OUTPUT)
     @get:Input
     var debugOutput: Boolean = false
 
+    /**
+     * Option to specify the message content.
+     */
     @Option(description = MESSAGE, option = MESSAGE)
     @get:Input
     var message: String = ""
 
+    /**
+     * Action method for the task.
+     */
     @Suppress("NestedBlockDepth")
     @TaskAction
     fun action() {
         with(slackConfig.get()) {
             if (debugOutput) {
                 logger.apply {
-                    lifecycle("slack-config |  buildVariant     : $tag")
-                    lifecycle("slack-config |  buildVariant     : $message")
-                    lifecycle("slack-config |  channel          : $channel")
-                    lifecycle("slack-config |  token            : $token")
+                    lifecycle("slack-comment    |  buildVariant     : $tag")
+                    lifecycle("slack-comment    |  message          : $message")
+                    lifecycle("slack-comment    |  channel          : $channel")
+                    lifecycle("slack-comment    |  token            : $token")
                     artifactName?.let {
-                        lifecycle("slack-config |   artifactName    : $artifactName")
+                        lifecycle("slack-comment    |   artifactName    : $artifactName")
                     }
                 }
             }
             SlackCommentUseCase(
                 SlackToken(token),
                 SlackChannel(channel),
-                comment = SlackMessage("foobar"),
+                comment = SlackMessage(message),
             ).invoke()
         }
     }
