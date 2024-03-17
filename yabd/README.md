@@ -1,3 +1,5 @@
+![img_logo_big_filled.png](..%2Fdocs%2Fimg%2Fimg_logo_big_filled.png)
+
 # YABD
 
 ## `:yabd`
@@ -14,9 +16,22 @@ These modules include:
 
 ### Config
 
+The configuration module in YABD is pivotal for customizing various aspects of the build distribution
+process. Through carefully defined configurations, users can tailor YABD to suit their specific 
+requirements and environments.
+
+
 ### Networking
 
+YABD harnesses the capabilities of http4k, a lightweight HTTP toolkit for Kotlin, to handle
+networking tasks effectively. This choice offers several benefits, including high performance, 
+simplicity, and extensibility. Leveraging http4k allows YABD to effortlessly manage HTTP
+communications, making it ideal for handling build distribution requests.
+
 ### Debug 
+
+YABD provides robust support for debugging, offering developers the tools and capabilities necessary 
+to identify and resolve issues efficiently throughout the build distribution process.
 
 ## Troubleshooting
 
