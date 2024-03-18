@@ -11,19 +11,32 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
 
+/**
+ * Task for commenting on a Jira ticket.
+ */
 abstract class JiraCommentTask : DefaultTask() {
+
     init {
         group = "Jira"
         description = "Jira file uploader & comment attach"
     }
 
+    /**
+     * Configuration for commenting on a Jira ticket.
+     */
     @get:Input
     abstract val jiraCommentConfig: Property<JiraCommentConfig>
 
+    /**
+     * Boolean option to enable debug output.
+     */
     @Option(description = DEBUG_DESCRIPTION, option = DEBUG_OUTPUT)
     @get:Input
     var debugOutput: Boolean = false
 
+    /**
+     * Action method for the task.
+     */
     @Suppress("NestedBlockDepth")
     @TaskAction
     fun action() {

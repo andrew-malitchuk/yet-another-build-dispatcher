@@ -2,6 +2,9 @@ package dev.yabd.plugin.common.core.ext
 
 import java.util.Locale
 
+/**
+ * Simple method - just makes first letter capitalize; why? cos one from Kotlin is deprecated
+ */
 fun String.capitalize() =
     replaceFirstChar {
         if (it.isLowerCase()) {
@@ -12,6 +15,8 @@ fun String.capitalize() =
     }
 
 /**
+ * Check if input string contains file extension suffix
+ *
  * @param extension file's extension without "." ("apk" not ".apk")
  */
 fun String.containsExtension(extension: String): Boolean {

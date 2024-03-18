@@ -28,7 +28,6 @@ object ArtifactPathFinder {
                             "please, try to specify build path manually",
                     )
                 }
-
         return buildPath
     }
 

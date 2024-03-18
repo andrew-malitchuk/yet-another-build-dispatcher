@@ -7,6 +7,14 @@ import dev.yabd.plugin.internal.data.slack.model.request.SlackCommentRequestNetM
 import dev.yabd.plugin.internal.data.slack.model.request.TextRequestNetModel
 
 object SlackUtils {
+    /**
+     * Formats a comment for posting on Slack.
+     *
+     * @param channel The Slack channel where the comment will be posted.
+     * @param comment The message to be posted as a comment.
+     *
+     * @return A Slack comment request model containing the formatted message.
+     */
     fun formatComment(
         channel: SlackChannel,
         comment: SlackMessage,
