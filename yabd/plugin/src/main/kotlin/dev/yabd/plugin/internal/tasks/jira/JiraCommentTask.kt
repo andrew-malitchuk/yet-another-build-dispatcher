@@ -15,7 +15,6 @@ import org.gradle.api.tasks.options.Option
  * Task for commenting on a Jira ticket.
  */
 abstract class JiraCommentTask : DefaultTask() {
-
     init {
         group = "Jira"
         description = "Jira file uploader & comment attach"

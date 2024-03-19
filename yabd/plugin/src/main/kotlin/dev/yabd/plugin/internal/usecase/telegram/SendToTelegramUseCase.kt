@@ -32,7 +32,6 @@ class SendToTelegramUseCase(
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
-
     /**
      * Executes the use case to send a file to a Telegram chat.
      *
@@ -56,11 +55,11 @@ class SendToTelegramUseCase(
             MultipartFormBody()
                 .plus(
                     DOCUMENT to
-                            MultipartFormFile(
-                                file.name,
-                                ContentType.OCTET_STREAM,
-                                file.inputStream(),
-                            ),
+                        MultipartFormFile(
+                            file.name,
+                            ContentType.OCTET_STREAM,
+                            file.inputStream(),
+                        ),
                 )
 
         // Send the file to the Telegram chat
@@ -72,7 +71,7 @@ class SendToTelegramUseCase(
         } else {
             throw GradleException(
                 "${this::class.java}    |   failed to upload build: " +
-                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }

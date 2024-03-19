@@ -15,7 +15,6 @@ import org.gradle.api.tasks.options.Option
  * Task for sending messages to Telegram.
  */
 abstract class TelegramCommentTask : DefaultTask() {
-
     init {
         group = "Telegram"
         description = "Telegram send message"

@@ -15,7 +15,6 @@ import org.gradle.api.tasks.options.Option
  * Task for commenting on Slack messages.
  */
 abstract class SlackCommentTask : DefaultTask() {
-
     init {
         group = "Slack"
         description = "Slack message comment"

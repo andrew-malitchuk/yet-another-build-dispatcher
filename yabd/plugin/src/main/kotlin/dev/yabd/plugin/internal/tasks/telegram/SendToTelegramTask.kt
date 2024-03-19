@@ -16,7 +16,6 @@ import org.gradle.api.tasks.options.Option
  * Task for uploading files to Telegram.
  */
 abstract class SendToTelegramTask : DefaultTask() {
-
     init {
         group = "Telegram"
         description = "Telegram file uploader"

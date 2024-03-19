@@ -25,7 +25,6 @@ class TelegramCommentUseCase(
     private val token: TelegramToken,
     private val message: TelegramMessage,
 ) : UseCase() {
-
     /**
      * Executes the use case to send a message to a Telegram chat.
      *
@@ -44,7 +43,7 @@ class TelegramCommentUseCase(
         } else {
             throw GradleException(
                 "${this::class.java}    |   failed to upload build: " +
-                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }

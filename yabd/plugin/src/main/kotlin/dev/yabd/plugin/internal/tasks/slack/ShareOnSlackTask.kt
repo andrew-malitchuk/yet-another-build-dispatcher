@@ -15,7 +15,6 @@ import org.gradle.api.tasks.options.Option
  * Task for sharing files on Slack.
  */
 abstract class ShareOnSlackTask : DefaultTask() {
-
     init {
         group = "Slack"
         description = "Slack file uploader"
