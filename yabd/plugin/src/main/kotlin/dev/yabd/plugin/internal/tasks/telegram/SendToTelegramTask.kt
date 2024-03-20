@@ -4,6 +4,7 @@ import dev.yabd.plugin.common.core.file.ArtifactPathFinder.defaultArtifactResolv
 import dev.yabd.plugin.internal.config.telegram.TelegramConfig
 import dev.yabd.plugin.internal.core.model.telegram.TelegramChat
 import dev.yabd.plugin.internal.core.model.telegram.TelegramToken
+import dev.yabd.plugin.internal.core.utils.LoggerUtils.logInfo
 import dev.yabd.plugin.internal.core.utils.TelegramUtils.getDownloadLink
 import dev.yabd.plugin.internal.usecase.telegram.SendToTelegramUseCase
 import org.gradle.api.DefaultTask
@@ -44,6 +45,7 @@ abstract class SendToTelegramTask : DefaultTask() {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
             if (debugOutput) {
                 logger.apply {
+                    logInfo()
                     lifecycle("send-to-telegram  |  buildVariant  : $tag")
                     lifecycle("send-to-telegram  |  chatId        : $chatId")
                     lifecycle("send-to-telegram  |  token         : $token")

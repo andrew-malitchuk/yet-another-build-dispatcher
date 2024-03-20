@@ -5,6 +5,7 @@ import dev.yabd.plugin.internal.config.jira.JiraConfig
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
+import dev.yabd.plugin.internal.core.utils.LoggerUtils.logInfo
 import dev.yabd.plugin.internal.usecase.jira.JiraUploadUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
@@ -32,6 +33,7 @@ abstract class JiraUploadTask : DefaultTask() {
             val artifactPath = project.defaultArtifactResolveStrategy(filePath, tag)
             if (debugOutput) {
                 logger.apply {
+                    logInfo()
                     lifecycle("jira-upload  |   buildVariant                : $tag")
                     lifecycle("jira-upload  |   email                       : $email")
                     lifecycle("jira-upload  |   jiraCloudInstance           : $jiraCloudInstance")
