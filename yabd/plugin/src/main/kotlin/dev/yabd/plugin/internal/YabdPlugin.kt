@@ -55,7 +55,7 @@ class YabdPlugin : Plugin<Project> {
         ) {
             yabd.telegram.apply {
                 tag = variant.name
-                it.group = "Telegram"
+                it.group = TELEGRAM_GROUP
                 it.description = "$SEND_TO_TELEGRAM_TASK    |   ${variant.name}"
                 it.telegramConfig.set(this)
             }
@@ -72,7 +72,7 @@ class YabdPlugin : Plugin<Project> {
         ) {
             yabd.telegram.apply {
                 tag = variant.name
-                it.group = "Telegram"
+                it.group = TELEGRAM_GROUP
                 it.description = "$TELEGRAM_COMMENT_TASK    |   ${variant.name}"
                 it.telegramConfig.set(this)
             }
@@ -89,7 +89,7 @@ class YabdPlugin : Plugin<Project> {
         ) {
             yabd.jira.apply {
                 tag = variant.name
-                it.group = "Jira"
+                it.group = JIRA_GROUP
                 it.description = "$JIRA_UPLOAD  |   ${variant.name}"
                 it.jiraConfig.set(this)
             }
@@ -105,7 +105,7 @@ class YabdPlugin : Plugin<Project> {
             JiraCommentTask::class.java,
         ) {
             yabd.jiraCommentConfig.apply {
-                it.group = "Jira"
+                it.group = JIRA_GROUP
                 it.description = "$JIRA_COMMENT |   ${variant.name}"
                 it.jiraCommentConfig.set(this)
             }
@@ -122,7 +122,7 @@ class YabdPlugin : Plugin<Project> {
         ) {
             yabd.jiraAttachBuildConfig.apply {
                 tag = variant.name
-                it.group = "Jira"
+                it.group = JIRA_GROUP
                 it.description = "$ATTACH_TO_JIRA_TICKET    |   ${variant.name}"
                 it.jiraAttachBuildConfig.set(this)
             }
@@ -139,7 +139,7 @@ class YabdPlugin : Plugin<Project> {
         ) {
             yabd.slackConfig.apply {
                 tag = variant.name
-                it.group = "Slack"
+                it.group = SLACK_GROUP
                 it.description = "$SLACK_COMMENT    |   ${variant.name}"
                 it.slackConfig.set(this)
             }
@@ -156,7 +156,7 @@ class YabdPlugin : Plugin<Project> {
         ) {
             yabd.slackConfig.apply {
                 tag = variant.name
-                it.group = "Slack"
+                it.group = SLACK_GROUP
                 it.description = "$SHARE_ON_SLACK   |   ${variant.name}"
                 it.slackConfig.set(this)
             }
@@ -173,5 +173,9 @@ class YabdPlugin : Plugin<Project> {
 
         const val SLACK_COMMENT = "slackComment"
         const val SHARE_ON_SLACK = "shareOnSlack"
+
+        const val TELEGRAM_GROUP = "Telegram"
+        const val JIRA_GROUP = "Jira"
+        const val SLACK_GROUP = "Slack"
     }
 }
