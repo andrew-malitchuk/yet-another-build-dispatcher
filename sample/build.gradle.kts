@@ -32,8 +32,6 @@ android {
                 "proguard-rules.pro",
             )
         }
-        create("foobar") {
-        }
     }
     flavorDimensions += "version"
     productFlavors {
