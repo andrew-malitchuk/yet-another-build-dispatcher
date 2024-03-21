@@ -5,7 +5,7 @@ import dev.yabd.plugin.common.model.base.NetModel
 
 data class ContentRequestNetModel(
     @SerializedName("content")
-    val content: List<ContentCommentrequestNetModel>?,
+    val content: List<ContentCommentRequestNetModel>?,
     @SerializedName("type")
     val type: String?,
 ) : NetModel

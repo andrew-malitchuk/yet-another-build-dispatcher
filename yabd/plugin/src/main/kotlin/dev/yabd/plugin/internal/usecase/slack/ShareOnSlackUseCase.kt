@@ -48,16 +48,18 @@ class ShareOnSlackUseCase(
 
         // Create a multipart form body with the file, initial comment, and channel
         val body =
-            MultipartFormBody().plus(
-                "file" to
-                    MultipartFormFile(
-                        file.name,
-                        ContentType.OCTET_STREAM,
-                        file.inputStream(),
-                    ),
-            ).plus(
-                "channels" to "${channel.value}",
-            )
+            MultipartFormBody()
+                .plus(
+                    "file" to
+                        MultipartFormFile(
+                            file.name,
+                            ContentType.OCTET_STREAM,
+                            file.inputStream(),
+                        ),
+                )
+                .plus(
+                    "channels" to "${channel.value}",
+                )
 
         // Share the file on Slack
         val response = ApacheClient().attachFile(token, body)

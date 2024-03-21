@@ -1,7 +1,7 @@
 package dev.yabd.plugin.internal.core.utils
 
 import dev.yabd.plugin.internal.data.jira.model.request.BodyRequestNetModel
-import dev.yabd.plugin.internal.data.jira.model.request.ContentCommentrequestNetModel
+import dev.yabd.plugin.internal.data.jira.model.request.ContentCommentRequestNetModel
 import dev.yabd.plugin.internal.data.jira.model.request.ContentRequestNetModel
 import dev.yabd.plugin.internal.data.jira.model.request.JiraCommentRequestNetModel
 import dev.yabd.plugin.internal.data.jira.model.response.JiraFileUploadResponseNetModel
@@ -26,7 +26,7 @@ object JiraUtils {
                             ContentRequestNetModel(
                                 content =
                                     listOf(
-                                        ContentCommentrequestNetModel(
+                                        ContentCommentRequestNetModel(
                                             text = comment,
                                             type = "text",
                                         ),

@@ -3,7 +3,7 @@ package dev.yabd.plugin.internal.core.utils
 import org.gradle.api.logging.Logger
 
 object LoggerUtils {
-    fun Logger.logInfo()  {
+    fun Logger.logInfo() {
         lifecycle("\n")
         lifecycle(PLUGIN_INFO)
         lifecycle("\n")
