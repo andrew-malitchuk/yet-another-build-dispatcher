@@ -8,22 +8,19 @@ plugins {
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.3")
+//        classpath("com.android.tools.build:gradle:7.0.3")
+        classpath(libs.android.gradle.plugin)
+
     }
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(gradleApi())
-
-    implementation(platform("org.http4k:http4k-bom:5.13.7.0"))
-    implementation("org.http4k:http4k-core")
-    implementation("org.http4k:http4k-client-apache")
-    implementation("org.apache.httpcomponents.client5:httpclient5:_")
-    implementation("org.http4k:http4k-multipart")
-    compileOnly("com.android.tools.build:gradle:7.0.3")
-    implementation("com.google.code.gson:gson:2.10.1")
-
+    implementation(libs.bundles.http4k)
+    implementation(libs.httpclient5)
+    compileOnly(libs.android.gradle.plugin)
+    implementation(libs.gson)
     testImplementation(libs.junit)
 }
 
