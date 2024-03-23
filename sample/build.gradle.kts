@@ -64,35 +64,35 @@ android {
     }
 }
 
-yabd {
-    telegram {
-        chatId = project.properties["chatId"] as String
-        token = project.properties["telegramToken"] as String
-    }
-    jira {
-        email = project.properties["email"] as String
-        token = project.properties["jiraToken"] as String
-        ticket = project.properties["ticket"] as String
-        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
-    }
-    jiraComment {
-        email = project.properties["email"] as String
-        token = project.properties["jiraToken"] as String
-        ticket = project.properties["ticket"] as String
-        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
-        comment = "Your build: {URL_TO_REPLACE}"
-    }
-    jiraAttachBuild {
-        email = project.properties["email"] as String
-        token = project.properties["jiraToken"] as String
-        ticket = project.properties["ticket"] as String
-        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
-    }
-    slackConfig {
-        channel = project.properties["slackChannel"] as String
-        token = project.properties["slackToken"] as String
-    }
-}
+//yabd {
+//    telegram {
+//        chatId = project.properties["chatId"] as String
+//        token = project.properties["telegramToken"] as String
+//    }
+//    jira {
+//        email = project.properties["email"] as String
+//        token = project.properties["jiraToken"] as String
+//        ticket = project.properties["ticket"] as String
+//        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
+//    }
+//    jiraComment {
+//        email = project.properties["email"] as String
+//        token = project.properties["jiraToken"] as String
+//        ticket = project.properties["ticket"] as String
+//        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
+//        comment = "Your build: {URL_TO_REPLACE}"
+//    }
+//    jiraAttachBuild {
+//        email = project.properties["email"] as String
+//        token = project.properties["jiraToken"] as String
+//        ticket = project.properties["ticket"] as String
+//        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
+//    }
+//    slackConfig {
+//        channel = project.properties["slackChannel"] as String
+//        token = project.properties["slackToken"] as String
+//    }
+//}
 
 dependencies {
 
