@@ -64,7 +64,7 @@ android {
     }
 }
 
-//yabd {
+// yabd {
 //    telegram {
 //        chatId = project.properties["chatId"] as String
 //        token = project.properties["telegramToken"] as String
@@ -92,7 +92,7 @@ android {
 //        channel = project.properties["slackChannel"] as String
 //        token = project.properties["slackToken"] as String
 //    }
-//}
+// }
 
 dependencies {
 
