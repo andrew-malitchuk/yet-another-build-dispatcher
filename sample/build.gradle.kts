@@ -1,3 +1,5 @@
+import java.util.Properties
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     alias(libs.plugins.androidApplication)
@@ -64,7 +66,11 @@ android {
     }
 }
 
-// yabd {
+ yabd {
+     val keystoreFile = project.rootProject.file("local.properties")
+     val properties = Properties()
+     properties.load(keystoreFile.inputStream())
+
 //    telegram {
 //        chatId = project.properties["chatId"] as String
 //        token = project.properties["telegramToken"] as String
@@ -92,7 +98,7 @@ android {
 //        channel = project.properties["slackChannel"] as String
 //        token = project.properties["slackToken"] as String
 //    }
-// }
+ }
 
 dependencies {
 
