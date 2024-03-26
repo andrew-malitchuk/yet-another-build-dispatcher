@@ -66,39 +66,39 @@ android {
     }
 }
 
- yabd {
-     val keystoreFile = project.rootProject.file("local.properties")
-     val properties = Properties()
-     properties.load(keystoreFile.inputStream())
+yabd {
+    val keystoreFile = project.rootProject.file("local.properties")
+    val properties = Properties()
+    properties.load(keystoreFile.inputStream())
 
-//    telegram {
-//        chatId = project.properties["chatId"] as String
-//        token = project.properties["telegramToken"] as String
-//    }
-//    jira {
-//        email = project.properties["email"] as String
-//        token = project.properties["jiraToken"] as String
-//        ticket = project.properties["ticket"] as String
-//        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
-//    }
-//    jiraComment {
-//        email = project.properties["email"] as String
-//        token = project.properties["jiraToken"] as String
-//        ticket = project.properties["ticket"] as String
-//        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
-//        comment = "Your build: {URL_TO_REPLACE}"
-//    }
-//    jiraAttachBuild {
-//        email = project.properties["email"] as String
-//        token = project.properties["jiraToken"] as String
-//        ticket = project.properties["ticket"] as String
-//        jiraCloudInstance = project.properties["jiraCloudInstance"] as String
-//    }
-//    slackConfig {
-//        channel = project.properties["slackChannel"] as String
-//        token = project.properties["slackToken"] as String
-//    }
- }
+    telegram {
+        chatId = properties["chatId"] as String
+        token = properties["telegramToken"] as String
+    }
+    jira {
+        email = properties["email"] as String
+        token = properties["jiraToken"] as String
+        ticket = properties["ticket"] as String
+        jiraCloudInstance = properties["jiraCloudInstance"] as String
+    }
+    jiraComment {
+        email = properties["email"] as String
+        token = properties["jiraToken"] as String
+        ticket = properties["ticket"] as String
+        jiraCloudInstance = properties["jiraCloudInstance"] as String
+        comment = "Your build: {URL_TO_REPLACE}"
+    }
+    jiraAttachBuild {
+        email = properties["email"] as String
+        token = properties["jiraToken"] as String
+        ticket = properties["ticket"] as String
+        jiraCloudInstance = properties["jiraCloudInstance"] as String
+    }
+    slackConfig {
+        channel = properties["slackChannel"] as String
+        token = properties["slackToken"] as String
+    }
+}
 
 dependencies {
 
