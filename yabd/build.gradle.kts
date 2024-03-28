@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
     id("org.jetbrains.dokka") version "1.9.10"
+    id("com.gradle.plugin-publish") version "1.2.1"
 }
 
 allprojects {
@@ -39,10 +40,6 @@ tasks.withType<Detekt>().configureEach {
         html.required.set(true)
         html.outputLocation.set(file("build/reports/detekt.html"))
     }
-}
-
-tasks.register("clean", Delete::class.java) {
-    delete(rootProject.layout.buildDirectory)
 }
 
 tasks.wrapper {

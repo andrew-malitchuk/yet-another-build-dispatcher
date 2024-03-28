@@ -8,7 +8,6 @@ plugins {
 
 buildscript {
     dependencies {
-//        classpath("com.android.tools.build:gradle:7.0.3")
         classpath(libs.android.gradle.plugin)
 
     }
@@ -37,6 +36,8 @@ tasks.withType<KotlinCompile> {
 }
 
 gradlePlugin {
+    website.set(property("WEBSITE").toString())
+    vcsUrl.set(property("VCS_URL").toString())
     plugins {
         create(property("ID").toString()) {
             id = property("ID").toString()
@@ -44,12 +45,7 @@ gradlePlugin {
             version = property("VERSION").toString()
             description = property("DESCRIPTION").toString()
             displayName = property("DISPLAY_NAME").toString()
-            tags.set(listOf("plugin", "gradle", "sample", "template"))
+            tags.set(listOf("android", "gradle", "artifact", "slack", "jira", "telegram"))
         }
     }
-}
-
-gradlePlugin {
-    website.set(property("WEBSITE").toString())
-    vcsUrl.set(property("VCS_URL").toString())
 }
