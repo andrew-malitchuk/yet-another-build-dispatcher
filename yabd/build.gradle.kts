@@ -9,9 +9,6 @@ plugins {
 }
 
 allprojects {
-//    group = "dev.yabd.plugin"
-//    version =  "0.0.1-a.1"
-
     apply {
         plugin(rootProject.libs.plugins.detekt.get().pluginId)
         plugin(rootProject.libs.plugins.ktlint.get().pluginId)
