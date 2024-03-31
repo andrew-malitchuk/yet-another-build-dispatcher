@@ -4,8 +4,7 @@ plugins {
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
-    id("org.jetbrains.dokka") version "1.9.10"
-//    id("com.gradle.plugin-publish") version "1.2.1"
+    alias(libs.plugins.dokka)
 }
 
 allprojects {
@@ -31,22 +30,6 @@ allprojects {
         config.setFrom(rootProject.files("../config/detekt/detekt.yml"))
     }
 }
-
-//gradlePlugin {
-//    website.set("https://github.com/andrew-malitchuk/yet-another-build-dispatcher")
-//    vcsUrl.set("https://github.com/andrew-malitchuk/yet-another-build-dispatcher")
-//    plugins {
-//        create("dev.yabd.plugin") {
-//            id = "dev.yabd.plugin"
-//            implementationClass = "dev.yabd.plugin.internal.YabdPlugin"
-//            version = "0.0.1-a.1"
-//            description =
-//                "A handy Gradle plugin for automating build distribution to Slack, Telegram, and Jira."
-//            displayName = "[YABD] Yet Another Build Dispatcher"
-//            tags.set(listOf("android", "gradle", "artifact", "slack", "jira", "telegram"))
-//        }
-//    }
-//}
 
 tasks.withType<Detekt>().configureEach {
     reports {

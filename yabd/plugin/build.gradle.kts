@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     `java-gradle-plugin`
-    id("org.jetbrains.dokka")
-    id("com.gradle.plugin-publish") version "1.2.1"
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.plugin.publish)
 }
 
 buildscript {
@@ -35,20 +35,19 @@ tasks.withType<KotlinCompile> {
     }
 }
 
-group = "dev.yabd.plugin"
-version = "0.0.1-a.1"
+group = property("GROUP").toString()
+version = property("VERSION").toString()
 
 gradlePlugin {
-    website.set("https://github.com/andrew-malitchuk/yet-another-build-dispatcher")
-    vcsUrl.set("https://github.com/andrew-malitchuk/yet-another-build-dispatcher")
+    website.set(property("WEBSITE").toString())
+    vcsUrl.set(property("VCS_URL").toString())
     plugins {
         create("dev.yabd.plugin") {
-            id = "dev.yabd.plugin"
-            implementationClass = "dev.yabd.plugin.internal.YabdPlugin"
-            version = "0.0.1-a.1"
-            description =
-                "A handy Gradle plugin for automating build distribution to Slack, Telegram, and Jira."
-            displayName = "[YABD] Yet Another Build Dispatcher"
+            id = property("ID").toString()
+            implementationClass = property("IMPLEMENTATION_CLASS").toString()
+            version = property("VERSION").toString()
+            description = property("DESCRIPTION").toString()
+            displayName = property("DISPLAY_NAME").toString()
             tags.set(listOf("android", "artifact", "slack", "jira", "telegram"))
         }
     }
