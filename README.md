@@ -22,6 +22,32 @@ workflows.
 
 ## Configuration
 
+
+### Secrets 
+
+To use yours secrets (api keys, tokens etc) securely, please, store them in `local.properties` and 
+fetch them in `build.gradle.kts` in follow way:
+
+```kotlin
+yabd {
+    val keystoreFile = project.rootProject.file("local.properties")
+    val properties = Properties()
+    properties.load(keystoreFile.inputStream())
+
+    telegram {
+        chatId = properties["chatId"] as String
+        token = properties["telegramToken"] as String
+    }
+    ...
+```
+
+Of course, you need to save your secrets in `local.properties` previously:
+
+```shell
+chatId=123
+telegramToken=foobar
+```
+
 ## Troubleshooting
 
 Encountering issues while using YABD? Check out the troubleshooting section for common problems

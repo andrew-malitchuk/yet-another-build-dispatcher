@@ -28,7 +28,6 @@ class AttachToJiraTicketScenario(
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
-
     /**
      * Executes the use case to attach the artifact to the Jira ticket and post a comment
      * with the attachment link.
@@ -40,24 +39,27 @@ class AttachToJiraTicketScenario(
             "`comment` is invalid; please, check it"
         }
 
-        val jiraUploadUseCase = JiraUploadUseCase(
-            authorization = authorization,
-            jiraCloudInstance = jiraCloudInstance,
-            ticket = ticket,
-            artifactPath = artifactPath,
-            artifactName = artifactName,
-        )
-        val jiraFileUploadResponse = jiraUploadUseCase()
-        if (jiraFileUploadResponse != null) {
-            val jiraCommentUseCase = JiraCommentUseCase(
+        val jiraUploadUseCase =
+            JiraUploadUseCase(
                 authorization = authorization,
                 jiraCloudInstance = jiraCloudInstance,
                 ticket = ticket,
-                comment = JiraUtils.getDownloadLinkComment(
-                    pattern = commentPattern,
-                    jiraFileUpload = jiraFileUploadResponse,
-                ),
+                artifactPath = artifactPath,
+                artifactName = artifactName,
             )
+        val jiraFileUploadResponse = jiraUploadUseCase()
+        if (jiraFileUploadResponse != null) {
+            val jiraCommentUseCase =
+                JiraCommentUseCase(
+                    authorization = authorization,
+                    jiraCloudInstance = jiraCloudInstance,
+                    ticket = ticket,
+                    comment =
+                        JiraUtils.getDownloadLinkComment(
+                            pattern = commentPattern,
+                            jiraFileUpload = jiraFileUploadResponse,
+                        ),
+                )
             return jiraCommentUseCase()
         } else {
             throw GradleException("Failed to upload a build")

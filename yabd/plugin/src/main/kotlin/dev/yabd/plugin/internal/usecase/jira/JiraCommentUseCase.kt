@@ -26,7 +26,6 @@ class JiraCommentUseCase(
     private val ticket: JiraTicket,
     private val comment: String?,
 ) : UseCase() {
-
     /**
      * Executes the use case to leave a comment on the specified Jira ticket.
      *
@@ -41,18 +40,19 @@ class JiraCommentUseCase(
         require(body != null) {
             "failed to generate `body`"
         }
-        val response = ApacheClient().leaveComment(
-            jiraCloudInstance,
-            ticket,
-            authorization,
-            body,
-        )
+        val response =
+            ApacheClient().leaveComment(
+                jiraCloudInstance,
+                ticket,
+                authorization,
+                body,
+            )
         return if (response.status.successful) {
             response.toJiraCommentResponseNetModel()
         } else {
             throw GradleException(
                 "JiraUploader |   failed to upload build: " +
-                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }

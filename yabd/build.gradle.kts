@@ -4,13 +4,10 @@ plugins {
     alias(libs.plugins.kotlin) apply false
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
-    id("org.jetbrains.dokka") version "1.9.10"
+    alias(libs.plugins.dokka)
 }
 
 allprojects {
-    group = property("GROUP").toString()
-    version = property("VERSION").toString()
-
     apply {
         plugin(rootProject.libs.plugins.detekt.get().pluginId)
         plugin(rootProject.libs.plugins.ktlint.get().pluginId)
@@ -39,10 +36,6 @@ tasks.withType<Detekt>().configureEach {
         html.required.set(true)
         html.outputLocation.set(file("build/reports/detekt.html"))
     }
-}
-
-tasks.register("clean", Delete::class.java) {
-    delete(rootProject.layout.buildDirectory)
 }
 
 tasks.wrapper {

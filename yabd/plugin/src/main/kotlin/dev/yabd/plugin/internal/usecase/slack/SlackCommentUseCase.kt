@@ -24,7 +24,6 @@ class SlackCommentUseCase(
     private val channel: SlackChannel,
     private val comment: SlackMessage,
 ) : UseCase() {
-
     /**
      * Executes the use case to post a comment on Slack.
      *
@@ -44,7 +43,7 @@ class SlackCommentUseCase(
         } else {
             throw GradleException(
                 "${this::class.java}    |   failed to upload build: " +
-                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }

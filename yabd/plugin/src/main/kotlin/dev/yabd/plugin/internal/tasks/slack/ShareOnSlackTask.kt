@@ -4,6 +4,7 @@ import dev.yabd.plugin.common.core.file.ArtifactPathFinder.defaultArtifactResolv
 import dev.yabd.plugin.internal.config.slack.SlackConfig
 import dev.yabd.plugin.internal.core.model.slack.SlackChannel
 import dev.yabd.plugin.internal.core.model.slack.SlackToken
+import dev.yabd.plugin.internal.core.utils.LoggerUtils.logInfo
 import dev.yabd.plugin.internal.usecase.slack.ShareOnSlackUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
@@ -15,7 +16,6 @@ import org.gradle.api.tasks.options.Option
  * Task for sharing files on Slack.
  */
 abstract class ShareOnSlackTask : DefaultTask() {
-
     init {
         group = "Slack"
         description = "Slack file uploader"
@@ -45,6 +45,7 @@ abstract class ShareOnSlackTask : DefaultTask() {
 
             if (debugOutput) {
                 logger.apply {
+                    logInfo()
                     lifecycle("share-on-slack   |  buildVariant     : $tag")
                     lifecycle("share-on-slack   |  channel          : $channel")
                     lifecycle("share-on-slack   |  token            : $token")

@@ -4,6 +4,7 @@ import dev.yabd.plugin.internal.config.jira.JiraCommentConfig
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
+import dev.yabd.plugin.internal.core.utils.LoggerUtils.logInfo
 import dev.yabd.plugin.internal.usecase.jira.JiraCommentUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
@@ -15,7 +16,6 @@ import org.gradle.api.tasks.options.Option
  * Task for commenting on a Jira ticket.
  */
 abstract class JiraCommentTask : DefaultTask() {
-
     init {
         group = "Jira"
         description = "Jira file uploader & comment attach"
@@ -43,6 +43,7 @@ abstract class JiraCommentTask : DefaultTask() {
         with(jiraCommentConfig.get()) {
             if (debugOutput) {
                 logger.apply {
+                    logInfo()
                     lifecycle("jira-comment  |   email                          : $email")
                     lifecycle("jira-comment  |   jiraCloudInstance              : $jiraCloudInstance")
                     lifecycle("jira-comment  |   token                          : $token")

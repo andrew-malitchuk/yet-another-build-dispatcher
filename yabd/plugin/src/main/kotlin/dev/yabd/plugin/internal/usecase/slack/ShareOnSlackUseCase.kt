@@ -29,7 +29,6 @@ class ShareOnSlackUseCase(
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
-
     /**
      * Executes the use case to share a file on Slack.
      *
@@ -48,15 +47,19 @@ class ShareOnSlackUseCase(
         }
 
         // Create a multipart form body with the file, initial comment, and channel
-        val body = MultipartFormBody().plus(
-            "file" to MultipartFormFile(
-                file.name,
-                ContentType.OCTET_STREAM,
-                file.inputStream(),
-            )
-        ).plus(
-            "channels" to "${channel.value}"
-        )
+        val body =
+            MultipartFormBody()
+                .plus(
+                    "file" to
+                        MultipartFormFile(
+                            file.name,
+                            ContentType.OCTET_STREAM,
+                            file.inputStream(),
+                        ),
+                )
+                .plus(
+                    "channels" to "${channel.value}",
+                )
 
         // Share the file on Slack
         val response = ApacheClient().attachFile(token, body)
@@ -67,7 +70,7 @@ class ShareOnSlackUseCase(
         } else {
             throw GradleException(
                 "${this::class.java}    |   failed to upload build: " +
-                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
     }

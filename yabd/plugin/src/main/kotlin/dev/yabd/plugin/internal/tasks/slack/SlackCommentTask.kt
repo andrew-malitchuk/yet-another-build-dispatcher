@@ -4,6 +4,7 @@ import dev.yabd.plugin.internal.config.slack.SlackConfig
 import dev.yabd.plugin.internal.core.model.slack.SlackChannel
 import dev.yabd.plugin.internal.core.model.slack.SlackMessage
 import dev.yabd.plugin.internal.core.model.slack.SlackToken
+import dev.yabd.plugin.internal.core.utils.LoggerUtils.logInfo
 import dev.yabd.plugin.internal.usecase.slack.SlackCommentUseCase
 import org.gradle.api.DefaultTask
 import org.gradle.api.provider.Property
@@ -15,7 +16,6 @@ import org.gradle.api.tasks.options.Option
  * Task for commenting on Slack messages.
  */
 abstract class SlackCommentTask : DefaultTask() {
-
     init {
         group = "Slack"
         description = "Slack message comment"
@@ -50,6 +50,7 @@ abstract class SlackCommentTask : DefaultTask() {
         with(slackConfig.get()) {
             if (debugOutput) {
                 logger.apply {
+                    logInfo()
                     lifecycle("slack-comment    |  buildVariant     : $tag")
                     lifecycle("slack-comment    |  message          : $message")
                     lifecycle("slack-comment    |  channel          : $channel")

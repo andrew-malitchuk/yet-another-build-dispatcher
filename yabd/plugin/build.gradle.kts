@@ -3,27 +3,23 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     `java-gradle-plugin`
-    id("org.jetbrains.dokka")
+    alias(libs.plugins.dokka)
+    alias(libs.plugins.plugin.publish)
 }
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.3")
+        classpath(libs.android.gradle.plugin)
     }
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
     implementation(gradleApi())
-
-    implementation(platform("org.http4k:http4k-bom:5.13.7.0"))
-    implementation("org.http4k:http4k-core")
-    implementation("org.http4k:http4k-client-apache")
-    implementation("org.apache.httpcomponents.client5:httpclient5:_")
-    implementation("org.http4k:http4k-multipart")
-    compileOnly("com.android.tools.build:gradle:7.0.3")
-    implementation("com.google.code.gson:gson:2.10.1")
-
+    implementation(libs.bundles.http4k)
+    implementation(libs.httpclient5)
+    compileOnly(libs.android.gradle.plugin)
+    implementation(libs.gson)
     testImplementation(libs.junit)
 }
 
@@ -39,20 +35,20 @@ tasks.withType<KotlinCompile> {
     }
 }
 
+group = property("GROUP").toString()
+version = property("VERSION").toString()
+
 gradlePlugin {
+    website.set(property("WEBSITE").toString())
+    vcsUrl.set(property("VCS_URL").toString())
     plugins {
-        create(property("ID").toString()) {
+        create("dev.yabd.plugin") {
             id = property("ID").toString()
             implementationClass = property("IMPLEMENTATION_CLASS").toString()
             version = property("VERSION").toString()
             description = property("DESCRIPTION").toString()
             displayName = property("DISPLAY_NAME").toString()
-            tags.set(listOf("plugin", "gradle", "sample", "template"))
+            tags.set(listOf("android", "artifact", "slack", "jira", "telegram"))
         }
     }
-}
-
-gradlePlugin {
-    website.set(property("WEBSITE").toString())
-    vcsUrl.set(property("VCS_URL").toString())
 }

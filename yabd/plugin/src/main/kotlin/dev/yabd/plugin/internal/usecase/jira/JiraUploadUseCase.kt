@@ -5,6 +5,7 @@ import dev.yabd.plugin.common.model.ArtifactPath
 import dev.yabd.plugin.internal.core.model.jira.JiraAuthorization
 import dev.yabd.plugin.internal.core.model.jira.JiraCloudInstance
 import dev.yabd.plugin.internal.core.model.jira.JiraTicket
+import dev.yabd.plugin.internal.data.jira.JiraApiService.Url.Variables.FILE
 import dev.yabd.plugin.internal.data.jira.JiraApiService.uploadFile
 import dev.yabd.plugin.internal.data.jira.model.response.JiraFileUploadResponseNetModel
 import dev.yabd.plugin.internal.data.jira.model.response.JiraFileUploadResponseNetModel.Companion.toJiraFileUploadResponseNetModel
@@ -32,7 +33,6 @@ class JiraUploadUseCase(
     private val artifactPath: ArtifactPath,
     private val artifactName: String? = null,
 ) : UseCase() {
-
     /**
      * Executes the use case to upload a file to the specified Jira ticket as an attachment.
      *
@@ -51,21 +51,24 @@ class JiraUploadUseCase(
         }
 
         // Create a multipart form body with the file
-        val body = MultipartFormBody().plus(
-            Variables.FILE to MultipartFormFile(
-                file.name,
-                ContentType.OCTET_STREAM,
-                file.inputStream(),
+        val body =
+            MultipartFormBody().plus(
+                FILE to
+                    MultipartFormFile(
+                        file.name,
+                        ContentType.OCTET_STREAM,
+                        file.inputStream(),
+                    ),
             )
-        )
 
         // Upload the file to the Jira ticket
-        val response = ApacheClient().uploadFile(
-            jiraCloudInstance,
-            ticket,
-            authorization,
-            body,
-        )
+        val response =
+            ApacheClient().uploadFile(
+                jiraCloudInstance,
+                ticket,
+                authorization,
+                body,
+            )
 
         // Check if the upload was successful and return the response model
         return if (response.status.successful) {
@@ -73,21 +76,8 @@ class JiraUploadUseCase(
         } else {
             throw GradleException(
                 "JiraUploader |   failed to upload build: " +
-                        "${response.status.code}: ${response.status.description} (${response.bodyString()})",
+                    "${response.status.code}: ${response.status.description} (${response.bodyString()})",
             )
         }
-    }
-
-    companion object {
-        object Variables {
-            const val JIRA_CLOUD_INSTANCE = "jiraCloudInstance"
-            const val TICKET = "ticket"
-            const val FILE = "file"
-        }
-
-        // Base URL for the Jira API
-        const val BASE_URL = "https://{${Variables.JIRA_CLOUD_INSTANCE}}"
-        // Path for uploading file attachments to a Jira ticket
-        const val PATH = "/rest/api/3/issue/{${Variables.TICKET}}/attachments"
     }
 }
