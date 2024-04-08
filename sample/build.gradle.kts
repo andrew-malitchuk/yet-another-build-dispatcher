@@ -4,7 +4,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
-    id("dev.malitchuk.yabd")
+    id("io.github.andrew-malitchuk.yabd")
 }
 
 android {
