@@ -2,6 +2,8 @@
 
 # YABD
 
+![Gradle Plugin Portal Version](https://img.shields.io/gradle-plugin-portal/v/io.github.andrew-malitchuk.yabd)
+
 ## Overview
 
 __YABD__ - Yet Another Build Dispatcher - a handy Gradle plugin for automating build distribution
@@ -17,6 +19,30 @@ workflows.
 - Debugging options for easy troubleshooting.
 
 ## Installation
+
+Apply the plugin in your `com.android.application` and configure plugin via DSL:
+
+<details open><summary>Kotlin</summary>
+
+```kt
+plugins {
+    id("com.android.application")
+    id("io.github.andrew-malitchuk.yabd") version "0.0.1-a.1"
+}
+```
+
+</details>
+
+<details><summary>Groovy</summary>
+
+```groovy
+plugins {
+    id 'com.android.application'
+    id 'io.github.andrew-malitchuk.yabd' version '0.0.1-a.1'
+}
+```
+
+</details>
 
 ## Usage
 
