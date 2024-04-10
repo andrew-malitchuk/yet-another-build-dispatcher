@@ -16,18 +16,18 @@ workflows.
 - Automate build distribution to Slack, Telegram, and Jira.
 - Customize distribution channels, messages, and attachments.
 - Seamless integration with Gradle projects.
-- Debugging options for easy troubleshooting.
+- <BuildVariant>ging options for easy troubleshooting.
 
 ## Installation
 
-Apply the plugin in your `com.android.application` and configure plugin via DSL:
+Apply the plugin in your `com.android.application` module and configure plugin via DSL:
 
 <details open><summary>Kotlin</summary>
 
 ```kt
 plugins {
     id("com.android.application")
-    id("io.github.andrew-malitchuk.yabd") version "0.0.1-a.1"
+    id("io.github.andrew-malitchuk.yabd") version "0.0.1-a.2"
 }
 ```
 
@@ -38,13 +38,65 @@ plugins {
 ```groovy
 plugins {
     id 'com.android.application'
-    id 'io.github.andrew-malitchuk.yabd' version '0.0.1-a.1'
+    id 'io.github.andrew-malitchuk.yabd' version '0.0.1-a.2'
 }
 ```
 
 </details>
 
 ## Usage
+
+__N.B.__ 
+
+`<BuildVariant>` - is your current buildVariant, f.e. `debug`, `release`, `stageDebug` etc.
+
+You may check it in the _Build -> Select Build Variant_.
+
+### Telegram
+
+`sendToTelegramTask<BuildVariant>` - send artifact to the Telegram chat;
+
+```shell
+./gradlew sendToTelegramTaskDebug
+./gradlew sendToTelegramTaskStageDebug
+```
+
+`telegramCommentTask<BuildVariant>` - send some message to the Telegram. 
+
+Parameters:
+
+- `--message` - your message.
+
+```shell
+./gradlew telegramCommentTaskDebug --message="Lorem Ipsum"
+./gradlew telegramCommentTaskStageDebug --message="Lorem Ipsum"
+```
+
+### Slack
+
+`shareOnSlack<BuildVariant>` - send artifact to the Slack channel;
+
+```shell
+./gradlew shareOnSlackDebug
+./gradlew shareOnSlackStageDebug
+```
+
+`slackComment<BuildVariant>`  - send some message to the Slack channel.
+
+Parameters:
+
+- `--message` - your message.
+
+```shell
+./gradlew slackCommentDebug --message="Lorem Ipsum"
+./gradlew slackCommentStageDebug --message="Lorem Ipsum"
+```
+
+### Jira
+
+attachToJiraTicket<BuildVariant> 
+jiraComment<BuildVariant> 
+jiraUpload<BuildVariant> 
 
 ## Configuration
 

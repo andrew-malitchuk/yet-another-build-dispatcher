@@ -11,5 +11,5 @@ object LoggerUtils {
     }
 
     // TODO: fetch  from gradle.properties
-    private const val PLUGIN_INFO = "[YABD] Andrew Malitchuk (2023) ver. 0.0.1-a.1"
+    private const val PLUGIN_INFO = "[YABD] Andrew Malitchuk (2023) ver. 0.0.1-a.2"
 }
