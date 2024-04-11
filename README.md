@@ -138,12 +138,17 @@ I welcome contributions from the community to help improve YABD. Whether you wan
 suggest a new feature, or submit a pull request, follow the contribution guidelines outlined in the
 project's repository. Together, we can make YABD even better.
 
+## TODO
+
+- [ ] fix commands for leaving comments;
+- [ ] simplify jira commands.
+
 ## License
 
 MIT License
 
 ```
-Copyright (c) [2023] [Andrew Malitchuk]
+Copyright (c) [2024] [Andrew Malitchuk]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
