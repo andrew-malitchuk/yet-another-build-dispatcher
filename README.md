@@ -56,6 +56,8 @@ You may check it in the _Build -> Select Build Variant_.
 
 `sendToTelegramTask<BuildVariant>` - send artifact to the Telegram chat;
 
+Examples:
+
 ```shell
 ./gradlew sendToTelegramTaskDebug
 ./gradlew sendToTelegramTaskStageDebug
@@ -67,6 +69,8 @@ Parameters:
 
 - `--message` - your message.
 
+Examples:
+
 ```shell
 ./gradlew telegramCommentTaskDebug --message="Lorem Ipsum"
 ./gradlew telegramCommentTaskStageDebug --message="Lorem Ipsum"
@@ -75,6 +79,8 @@ Parameters:
 ### Slack
 
 `shareOnSlack<BuildVariant>` - send artifact to the Slack channel;
+
+Examples: 
 
 ```shell
 ./gradlew shareOnSlackDebug
@@ -87,6 +93,8 @@ Parameters:
 
 - `--message` - your message.
 
+Examples:
+
 ```shell
 ./gradlew slackCommentDebug --message="Lorem Ipsum"
 ./gradlew slackCommentStageDebug --message="Lorem Ipsum"
@@ -94,9 +102,33 @@ Parameters:
 
 ### Jira
 
-attachToJiraTicket<BuildVariant> 
-jiraComment<BuildVariant> 
-jiraUpload<BuildVariant> 
+`jiraComment<BuildVariant>` - leave a comment for a Jira ticket.
+
+Examples:
+
+```shell
+./gradlew jiraCommentDebug 
+./gradlew jiraCommentStageDebug 
+```
+
+`jiraUpload<BuildVariant>` - upload artifact to the certain Jira ticket.
+
+Examples:
+
+```shell
+./gradlew jiraUploadDebug 
+./gradlew jiraUploadStageDebug 
+```
+
+`attachToJiraTicket<BuildVariant>` - the combination of both previous commands: upload artifact, 
+receive download link and leave a comment with a download link.
+
+Examples:
+
+```shell
+./gradlew attachToJiraTicketDebug 
+./gradlew attachToJiraTicketStageDebug
+```
 
 ## Configuration
 
