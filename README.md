@@ -2,6 +2,8 @@
 
 # YABD
 
+![Gradle Plugin Portal Version](https://img.shields.io/gradle-plugin-portal/v/io.github.andrew-malitchuk.yabd)
+
 ## Overview
 
 __YABD__ - Yet Another Build Dispatcher - a handy Gradle plugin for automating build distribution
@@ -14,11 +16,119 @@ workflows.
 - Automate build distribution to Slack, Telegram, and Jira.
 - Customize distribution channels, messages, and attachments.
 - Seamless integration with Gradle projects.
-- Debugging options for easy troubleshooting.
+- <BuildVariant>ging options for easy troubleshooting.
 
 ## Installation
 
+Apply the plugin in your `com.android.application` module and configure plugin via DSL:
+
+<details open><summary>Kotlin</summary>
+
+```kt
+plugins {
+    id("com.android.application")
+    id("io.github.andrew-malitchuk.yabd") version "0.0.1-a.2"
+}
+```
+
+</details>
+
+<details><summary>Groovy</summary>
+
+```groovy
+plugins {
+    id 'com.android.application'
+    id 'io.github.andrew-malitchuk.yabd' version '0.0.1-a.2'
+}
+```
+
+</details>
+
 ## Usage
+
+__N.B.__ 
+
+`<BuildVariant>` - is your current buildVariant, f.e. `debug`, `release`, `stageDebug` etc.
+
+You may check it in the _Build -> Select Build Variant_.
+
+### Telegram
+
+`sendToTelegramTask<BuildVariant>` - send artifact to the Telegram chat;
+
+Examples:
+
+```shell
+./gradlew sendToTelegramTaskDebug
+./gradlew sendToTelegramTaskStageDebug
+```
+
+`telegramCommentTask<BuildVariant>` - send some message to the Telegram. 
+
+Parameters:
+
+- `--message` - your message.
+
+Examples:
+
+```shell
+./gradlew telegramCommentTaskDebug --message="Lorem Ipsum"
+./gradlew telegramCommentTaskStageDebug --message="Lorem Ipsum"
+```
+
+### Slack
+
+`shareOnSlack<BuildVariant>` - send artifact to the Slack channel;
+
+Examples: 
+
+```shell
+./gradlew shareOnSlackDebug
+./gradlew shareOnSlackStageDebug
+```
+
+`slackComment<BuildVariant>`  - send some message to the Slack channel.
+
+Parameters:
+
+- `--message` - your message.
+
+Examples:
+
+```shell
+./gradlew slackCommentDebug --message="Lorem Ipsum"
+./gradlew slackCommentStageDebug --message="Lorem Ipsum"
+```
+
+### Jira
+
+`jiraComment<BuildVariant>` - leave a comment for a Jira ticket.
+
+Examples:
+
+```shell
+./gradlew jiraCommentDebug 
+./gradlew jiraCommentStageDebug 
+```
+
+`jiraUpload<BuildVariant>` - upload artifact to the certain Jira ticket.
+
+Examples:
+
+```shell
+./gradlew jiraUploadDebug 
+./gradlew jiraUploadStageDebug 
+```
+
+`attachToJiraTicket<BuildVariant>` - the combination of both previous commands: upload artifact, 
+receive download link and leave a comment with a download link.
+
+Examples:
+
+```shell
+./gradlew attachToJiraTicketDebug 
+./gradlew attachToJiraTicketStageDebug
+```
 
 ## Configuration
 
@@ -60,12 +170,17 @@ I welcome contributions from the community to help improve YABD. Whether you wan
 suggest a new feature, or submit a pull request, follow the contribution guidelines outlined in the
 project's repository. Together, we can make YABD even better.
 
+## TODO
+
+- [ ] fix commands for leaving comments;
+- [ ] simplify jira commands.
+
 ## License
 
 MIT License
 
 ```
-Copyright (c) [2023] [Andrew Malitchuk]
+Copyright (c) [2024] [Andrew Malitchuk]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
