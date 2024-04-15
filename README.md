@@ -132,6 +132,44 @@ Examples:
 
 ## Configuration
 
+### Telegram
+
+```shell
+yabd {
+    telegram {
+        chatId = "chat-id"
+        token = "telegram-token"
+        filePath = "/path/to/file/build.apk"
+        artifactName = "new-name.apk"
+    }
+}
+```
+
+### Telegram
+
+```shell
+yabd {
+    telegram {
+        chatId = "chat-id"
+        token = "telegram-token"
+        filePath = "/path/to/file/build.apk"
+        artifactName = "new-name.apk"
+    }
+}
+```
+
+### Slack
+
+```shell
+yabd {
+    slackConfig {
+        channel = "channel-id"
+        token = "slack-token"
+        filePath = "/path/to/file/build.apk"
+        artifactName = "new-name.apk"
+    }
+}
+```
 
 ### Secrets 
 
