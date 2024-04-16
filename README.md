@@ -211,7 +211,8 @@ project's repository. Together, we can make YABD even better.
 ## TODO
 
 - [ ] fix commands for leaving comments;
-- [ ] simplify jira commands.
+- [ ] simplify jira commands;
+- [ ] add commands params.
 
 ## License
 
