@@ -145,19 +145,6 @@ yabd {
 }
 ```
 
-### Telegram
-
-```shell
-yabd {
-    telegram {
-        chatId = "chat-id"
-        token = "telegram-token"
-        filePath = "/path/to/file/build.apk"
-        artifactName = "new-name.apk"
-    }
-}
-```
-
 ### Slack
 
 ```shell
@@ -168,6 +155,30 @@ yabd {
         filePath = "/path/to/file/build.apk"
         artifactName = "new-name.apk"
     }
+}
+```
+
+### Jira 
+
+```shell
+jira {
+    email = "foo@bar.com"
+    token = "jira-token"
+    ticket = "FOOBAR-123"
+    jiraCloudInstance = "foobar.atlassian.net"
+}
+jiraComment {
+    email = "foo@bar.com"
+    token = "jira-token"
+    ticket = "FOOBAR-123"
+    jiraCloudInstance = "foobar.atlassian.net"
+    comment = "Your build: {URL_TO_REPLACE}"
+}
+jiraAttachBuild {
+    email = "foo@bar.com"
+    token = "jira-token"
+    ticket = "FOOBAR-123"
+    jiraCloudInstance = "foobar.atlassian.net"
 }
 ```
 
