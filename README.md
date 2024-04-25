@@ -27,7 +27,7 @@ Apply the plugin in your `com.android.application` module and configure plugin v
 ```kt
 plugins {
     id("com.android.application")
-    id("io.github.andrew-malitchuk.yabd") version "0.0.1-a.2"
+    id("io.github.andrew-malitchuk.yabd") version "0.0.1-a.3"
 }
 ```
 
@@ -38,7 +38,7 @@ plugins {
 ```groovy
 plugins {
     id 'com.android.application'
-    id 'io.github.andrew-malitchuk.yabd' version '0.0.1-a.2'
+    id 'io.github.andrew-malitchuk.yabd' version '0.0.1-a.3'
 }
 ```
 
