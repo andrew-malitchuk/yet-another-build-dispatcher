@@ -132,6 +132,55 @@ Examples:
 
 ## Configuration
 
+### Telegram
+
+```shell
+yabd {
+    telegram {
+        chatId = "chat-id"
+        token = "telegram-token"
+        filePath = "/path/to/file/build.apk"
+        artifactName = "new-name.apk"
+    }
+}
+```
+
+### Slack
+
+```shell
+yabd {
+    slackConfig {
+        channel = "channel-id"
+        token = "slack-token"
+        filePath = "/path/to/file/build.apk"
+        artifactName = "new-name.apk"
+    }
+}
+```
+
+### Jira 
+
+```shell
+jira {
+    email = "foo@bar.com"
+    token = "jira-token"
+    ticket = "FOOBAR-123"
+    jiraCloudInstance = "foobar.atlassian.net"
+}
+jiraComment {
+    email = "foo@bar.com"
+    token = "jira-token"
+    ticket = "FOOBAR-123"
+    jiraCloudInstance = "foobar.atlassian.net"
+    comment = "Your build: {URL_TO_REPLACE}"
+}
+jiraAttachBuild {
+    email = "foo@bar.com"
+    token = "jira-token"
+    ticket = "FOOBAR-123"
+    jiraCloudInstance = "foobar.atlassian.net"
+}
+```
 
 ### Secrets 
 
@@ -173,7 +222,8 @@ project's repository. Together, we can make YABD even better.
 ## TODO
 
 - [ ] fix commands for leaving comments;
-- [ ] simplify jira commands.
+- [ ] simplify jira commands;
+- [ ] add commands params.
 
 ## License
 
