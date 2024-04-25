@@ -20,7 +20,6 @@ dependencies {
     implementation(libs.httpclient5)
     compileOnly(libs.android.gradle.plugin)
     implementation(libs.gson)
-    testImplementation(libs.junit)
 }
 
 java {
