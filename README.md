@@ -11,6 +11,10 @@ to Slack, Telegram, and Jira. It simplifies the process of sharing build artifac
 your team members and stakeholders, enhancing collaboration and communication in your development
 workflows.
 
+[Simplifying Deployment: Gradle Plugin for Uploading Build Files to Jira, Slack, and Telegram](https://medium.com/@andrew.malitchuk/simplifying-deployment-gradle-plugin-for-uploading-build-files-to-jira-slack-and-telegram-210f9f4b53e3)
+
+[Спрощення розгортання: Gradle плагін для завантаження файлів збірки у Jira, Slack та Telegram](https://medium.com/@andrew.malitchuk/%D1%81%D0%BF%D1%80%D0%BE%D1%89%D0%B5%D0%BD%D0%BD%D1%8F-%D1%80%D0%BE%D0%B7%D0%B3%D0%BE%D1%80%D1%82%D0%B0%D0%BD%D0%BD%D1%8F-gradle-%D0%BF%D0%BB%D0%B0%D0%B3%D1%96%D0%BD-%D0%B4%D0%BB%D1%8F-%D0%B7%D0%B0%D0%B2%D0%B0%D0%BD%D1%82%D0%B0%D0%B6%D0%B5%D0%BD%D0%BD%D1%8F-%D1%84%D0%B0%D0%B9%D0%BB%D1%96%D0%B2-%D0%B7%D0%B1%D1%96%D1%80%D0%BA%D0%B8-%D1%83-jira-slack-%D1%82%D0%B0-telegram-3d7d0a3efb32)
+
 ## Features
 
 - Automate build distribution to Slack, Telegram, and Jira.
